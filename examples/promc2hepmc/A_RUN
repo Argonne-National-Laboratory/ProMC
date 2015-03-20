@@ -1,0 +1,7 @@
+#!/bin/bash
+# A simple example
+
+# run setup.sh first!
+wget http://atlaswww1.hep.anl.gov/asc/snowmass2013/delphes36/zprime3000/truth/pythia8_zprime3000_truth_1.promc
+promc2hepmc  pythia8_zprime3000_truth_1.promc pythia8_zprime3000_truth_1.hepmc 
+

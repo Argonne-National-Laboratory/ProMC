@@ -1,0 +1,73 @@
+#!/bin/bash
+# Extract N events from ProMC
+
+
+"exec" "python" "-Wignore" "$0" "$@"
+
+__version__ = 'ProMC'
+__author__  = 'Sergei Chekanov  (chakanau@hep.anl.gov)'
+__doc__     = 'Extract N events and copy them to a separate file' 
+
+
+import os,sys
+#print 'Number of arguments:', len(sys.argv), 'arguments.'
+
+if len(sys.argv) != 4:
+      print "Usage : promc_extract [input] [output] N"
+      sys.exit(0);
+
+NN=0
+try: 
+   NN=int(sys.argv[3])
+except ValueError:
+   print "Usage : promc_extract [input] [output] N"
+   sys.exit(0);
+ 
+
+print "Reading file=",sys.argv[1]
+print "Reading output=",sys.argv[2]
+print "Number of extracted events=",NN
+
+
+
+import zipfile
+
+z = zipfile.ZipFile(sys.argv[1], "r")
+
+Ntot=int(z.read('promc_nevents'))
+if NN>Ntot: 
+   print "Error : required number of events ",NN," is larger than ",Ntot
+   sys.exit(0);
+
+
+# generate random list
+import random
+rlist=random.sample(range(Ntot), NN)
+
+
+
+
+out = zipfile.ZipFile(sys.argv[2], "w",compression=zipfile.ZIP_DEFLATED)
+i=0
+needed=0
+for filename in z.namelist():
+   if (needed>NN): break
+   try:
+      event=int(filename)
+      #if rlist.index(event)>-1:
+      bytes = z.read(filename)
+      out.writestr(filename,bytes)
+      needed=needed+1 
+      if (needed%10): print "Written=",needed
+   except ValueError:  # write metadata info 
+       if filename.find("promc_nevents")<0: 
+             bytes = z.read(filename)
+             out.writestr(filename,bytes)
+       else:
+             out.writestr(filename,str(NN))
+
+   if (i%100)==0:
+           print int((float(i)/Ntot)*100.0),"% done"  
+   i=i+1
+z.close()
+out.close()

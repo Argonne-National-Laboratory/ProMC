@@ -1,0 +1,182 @@
+
+// This ProtocolBuffers file was used to generate records for PFile
+// class, which contains zipped entries of this class.
+// If Protocol buffers are installed http://code.google.com/p/protobuf/,
+// one can generate necessary code as:
+// protoc --java_out=src    HRecord.proto
+// protoc --cpp_out=CBook/src  HRecord.proto
+// S.Chekanov.
+
+
+
+package promc;
+option java_package = "promc.io";
+option java_outer_classname = "PBufFile";
+
+// orginize in repeated records
+message Record {
+
+ optional string name = 1;
+
+  message P0I {
+    required string  name=1  [default = "none"];
+    repeated int64   value=2 [packed=true];
+  }
+  optional P0I p0I = 2;
+
+
+  message P0D {
+    required string  name=1  [default = "none"];
+    repeated double  value=2 [packed=true];
+  }
+  optional P0D p0D = 3;
+
+  // to keep X vs Y
+  message PXY {
+    required string  name=1  [default = "none"];
+    repeated double  x=2 [packed=true];
+    repeated double  y=3 [packed=true];
+  }
+  optional PXY pXY = 4;
+
+
+ // to keep X vs Y vs Z
+  message PXYZ {
+    required string  name=1  [default = "none"];
+    repeated double  x=2 [packed=true];
+    repeated double  y=3 [packed=true];
+    repeated double  z=4 [packed=true];
+  }
+  optional PXYZ pXYZ = 5;
+
+
+ // complete P1D object with errors 
+ message P1D {
+    required string  name=1  [default = "none"];
+    repeated double  x=2 [packed=true];
+    repeated double  y=3 [packed=true];
+    // to keep errors
+    repeated double  xleft=4 [packed=true];
+    repeated double  xright=5 [packed=true];
+    repeated double  yupper=6 [packed=true];
+    repeated double  ylower=7 [packed=true];
+    // to keep systematic  
+    repeated double  xsysleft=8 [packed=true];
+    repeated double  xsysright=9 [packed=true];
+    repeated double  ysysupper=10 [packed=true];
+    repeated double  ysyslower=11 [packed=true];
+  }
+  optional P1D p1D = 6;
+
+
+ //  1D histogram
+ message H1D {
+    required string  name=1  [default = "none"];
+    repeated double  heights=2 [packed=true];
+    repeated double  errors=3 [packed=true];
+    repeated double  means=4 [packed=true];
+    repeated double  rmses=5 [packed=true];
+    repeated int32   entries=6 [packed=true];
+    repeated double  edges=7 [packed=true];
+    required int32   bins=8;
+    required double  min=9;
+    required double  max=10;
+    optional int32   allentries=11;
+    optional int32   nentries=12;
+    optional double  underflow=13;
+    optional double  overflow=14;
+    optional double  rms=15; 
+    optional double  mean=16; 
+    required bool    isFixedBins=17;
+  }
+  optional H1D h1D = 7;
+
+ //  2D histogram
+ message H2D {
+    required string  name=1  [default = "none"];
+    repeated double  heights=2 [packed=true];
+    repeated double  errors=3 [packed=true];
+    repeated double  meansX=4 [packed=true];
+    repeated double  rmsesX=5 [packed=true];
+    repeated int32   entries=6 [packed=true];
+    repeated double  meansY=7 [packed=true];
+    repeated double  rmsesY=8 [packed=true];
+
+    // binsX,minX,maxX,  binsY,minY,maxY,  meanX,rmsX,meanY,rmsY
+    repeated double summary =9  [packed=true];
+
+    // out of range
+    // 6 | 7 | 8
+    // -----------
+    // 3 | 4 | 5
+    // -----------
+    // 0 | 1 | 2
+    repeated double  outofrange=10 [packed=true];
+    optional int32   allentries=11;
+    optional int32   nentries=12;
+    required bool    isFixedBins=13;
+  }
+  optional H2D h2D = 8;
+
+
+ //  1D function
+ message F1D {
+    required string  name=1  [default = "none"];
+    required string definition=2;
+    optional double  min=3;
+    optional double  max=4;
+  }
+  optional F1D f1D = 9;
+
+
+//  2D function
+ message F2D {
+    required string  name=1  [default = "none"];
+    required string definition=2;
+    optional double  minX=3;
+    optional double  maxX=4;
+    optional double  minY=5;
+    optional double  maxY=6;
+  }
+  optional F2D f2D = 10;
+
+
+
+//  N-D function
+ message FND {
+    required string  name=1  [default = "none"];
+    required string definition=2;
+    required string  vars=3;
+  }
+  optional FND fND = 11;
+
+
+//  parametric function
+ message FPR {
+    required string  name=1  [default = "none"];
+    required string  definition=2;
+    required int32   divU=3;
+    required int32   divV=4;
+  }
+  optional FPR fPR = 12;
+
+
+//  NxM matrix (double) 
+ message PND {
+    required string  name=1  [default = "none"];
+    repeated double  value=2 [packed=true];    
+    required int32   dimension=3;
+  }
+  optional PND pND = 13;
+
+
+//  NxM matrix (integer) 
+ message PNI {
+    required string name=1  [default = "none"];
+    repeated int32  value=2 [packed=true];
+    required int32  dimension=3;
+  }
+  optional PNI pNI = 14;
+
+
+}

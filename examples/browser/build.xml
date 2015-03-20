@@ -1,0 +1,208 @@
+<project name="browser_promc" default="jarlib" basedir=".">
+    <description>
+        ProMC build file
+   </description>
+
+<!-- set global properties for this build -->
+  <property name="app.version" value="1.0"/>
+  <property name="app.author" value="S.Chekanov"/>
+  <property name="app.name" value="ProMC"/>
+
+
+
+  <!-- set global properties for this build -->
+  <property name="src.dir" location="src" />
+  <property name="build.dir"    location="build"/>
+  <property name="dist"  location="dist" />
+  <property name="lib.dir"     value="lib"/>
+  <property name="javadoc.dir" value="doc/api" />
+
+
+  <path id="classpath">
+       <fileset dir="${lib.dir}" includes="**/*.jar"/>
+  </path>
+
+
+ <!-- Build the CLASSPATH -->
+ <path id="classpath_run">
+  <fileset dir="${lib.dir}" includes="**/*.jar"/>
+ </path>
+
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${javadoc.dir}" /> 
+    <copy file="../../java/promc-protobuf.jar" tofile="${lib.dir}/promc-protobuf.jar"/>
+  </target>
+    
+  <target name="copybeforecompile" depends="init">
+
+
+
+ <!-- make necessary manifest -->
+  <manifest file="${src.dir}/META-INF/MANIFEST.MF">
+   <attribute name="Built-By" value="${app.author}"/>
+   <attribute name="Main-Class" value="probrowser.Main"/>
+   <attribute name="Class-Path" value="lib/promc-protobuf.jar"/>
+   <attribute name="Built-Date" value="${DSTAMP}"/>
+   <attribute name="Version" value="${app.version}"/>
+  </manifest>
+
+
+    <copy todir="${build.dir}">
+      <fileset dir="${src.dir}">
+        <patternset>
+          <exclude name="**/*.java*" />
+          <exclude name="**/*.odg" />
+          <exclude name="**/*.odp" />
+          <exclude name="**/*.*~" />
+          <exclude name="**/*.bak" />
+          <exclude name="**/*.pdf" />
+    </patternset>
+     </fileset>
+    </copy>
+  </target>
+
+
+<target name="compile" depends="init,copybeforecompile"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src.dir}" destdir="${build.dir}"
+          debug="on"  deprecation="off"  optimize="on"
+          target="1.7" source="1.7" 
+          classpathref="classpath">
+    </javac>
+  </target>
+
+
+
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="lib/browser_promc_tmp.jar" 
+         basedir="${build.dir}" 
+         index="true"
+         manifest="${build.dir}/META-INF/MANIFEST.MF"/>
+  </target>
+
+
+
+<target name="jarlib" depends="dist" >
+ <delete file="browser_promc.jar"/>
+ <property name="store.jar.name" value="browser_promc"/>
+ <property name="store.dir" value="dist"/>
+ <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+ <echo message="Packaging into a single JAR for a library"/>
+ <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
+ <zipgroupfileset dir="lib/" includes="*.jar"/>
+ <manifest>
+ <attribute name="Main-Class" value="probrowser.Main"/>
+ </manifest>
+ </jar>
+ <zip destfile="${store.jar.name}.jar">
+ <zipfileset src="${store.dir}/temp_final.jar"
+ excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA, *.html"/>
+ </zip>
+ <delete file="${store.dir}/temp_final.jar"/>
+ <delete dir="${store.dir}/lib"/>
+ <delete file="${lib.dir}/browser_promc_tmp.jar"/>
+ <delete file="${lib.dir}/promc-protobuf.jar"/>
+ <delete dir="${build.dir}"/>
+ <delete dir="dist"/>
+ 
+  <copy file="browser_promc.jar" tofile="hepsim.jar"/>
+
+ </target>
+
+
+
+
+
+<target name="run" depends="dist">
+   <!-- run the class -->
+   <java classname="probrowser.Main" 
+           fork="true" 
+           failonerror="true"
+           maxmemory="64m"
+           >
+         <!-- add a command line arg: <arg value="-h"/> -->
+          <arg value="-h"/>
+         <classpath>
+     <!-- use the value of the ${classpath} property in the classpath -->
+     <!--    <pathelement path="${classpath_run}"/> --> 
+     <!-- include all jar files  -->
+         <pathelement path="${java.class.path}"/>
+        <fileset dir=".">
+            <include name="browser_promc.jar"/>
+        </fileset>
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+        </fileset>
+
+  </classpath>
+       </java>
+
+  </target>
+
+
+
+<target name="javadoc" depends="init,cleandoc">
+  <javadoc destdir="${javadoc.dir}"
+           author="true"
+           version="false"
+           use="true"
+           splitindex="true"
+           source="${build.sourceversion}" 
+           overview="doc/symbols.html"
+           link="http://download.oracle.com/javase/6/docs/api/"
+           windowtitle="jHepWork-${build.version} API - jHPlot" classpathref="classpath">
+
+<!--
+     <classpath>
+        <pathelement path="${java.class.path}/"/>
+      </classpath>
+-->
+
+    <packageset dir="${src.dir}" >
+      <include name="jhplot/**" />
+      <include name="carmetal/objects/**" />
+      <exclude name="jhplot/gui/**" />
+    </packageset>
+
+
+
+    <bottom><![CDATA[<i>&copy; Copyright 2005-2011 S.Chekanov. All Rights Reserved.
+      <br>jHPlot package, a part of <a href="http://jwork.org/jhepwork/">jHepWork</a>:  is a full-featured multiplatform data-analysis framework</i>]]></bottom>
+  </javadoc>
+</target>
+
+
+
+
+
+
+
+
+
+ <target name="cleandoc"
+        description="clean up javadoc" >
+    <delete dir="doc/api"/>
+  </target>
+
+
+
+
+
+  <target name="clean"
+        description="clean up" >
+    <delete dir="${build.dir}"/>
+    <delete dir="${dist}"/>
+    <delete file="jhplot.jar"/>
+  </target>
+</project>

@@ -1,0 +1,34 @@
+// ProMC statistics record.
+// See: https://atlaswww.hep.anl.gov/asc/promc/
+// This is a template for Monte Carlo event record based on variable number of bytes
+// Author: 
+// S.Chekanov. chekanov@anl.gov (ANL)
+
+package promc;
+option java_package = "pronlo.io";
+option java_outer_classname = "ProMCStatFile";
+
+message ProMCStat {
+
+    optional int32   nevents_requested=1;   // events requested 
+    optional int32   nevents_failed=2;      // events failed
+    optional double  cross_section_accumulated=3;       //  cross section in pb (accumulated after all events) 
+    optional double  cross_section_error_accumulated=4; //  error associated with this cross section in pb
+    optional double  luminosity_accumulated=5;          //  accumulated luminosity in pb
+    optional int32   nTried=6;                           // tried events
+    optional int32   nSelected=7;                        // selected events
+    optional int32   nAccepted=8;                        // accepted events
+
+  // store generated processes 
+   message ProcessData {
+         required sint32 id = 1;                        // process ID 
+         required double cross_section = 2;             // process cross section (in pb) 
+         required double cross_section_error = 3;       // error on cross section 
+         required string name = 4;                      // name of the process  
+   }
+
+  repeated ProcessData processData = 10;
+
+
+}
+

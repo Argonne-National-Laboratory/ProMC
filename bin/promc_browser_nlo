@@ -1,0 +1,23 @@
+#!/bin/bash
+# View NLO data in a Java browser   
+# S.Chekanov (ANL)
+
+
+args=$#           # Number of args passed.
+if [ $args == 0  ]
+then
+   echo "did not specify input PROMC file!"
+   exit 1;
+fi
+
+CC="java"
+fcheck=`type -p $CC`
+if test -x "$fcheck";
+then
+    echo "Open $1" 
+else
+    echo "Error: $CC does not exist or not in your PATH"
+    exit 0;
+fi
+
+java -cp $PROMC/examples/browser/browser_promc.jar probrowser.NLO $1

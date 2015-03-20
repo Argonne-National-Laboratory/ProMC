@@ -1,0 +1,65 @@
+// ProMC header record.
+// See: https://atlaswww.hep.anl.gov/asc/promc/
+// This is a template for Monte Carlo event record based on variable number of bytes
+// Author: 
+// S.Chekanov. chekanov@anl.gov (ANL)
+
+package promc;
+option java_package = "pronlo.io";
+option java_outer_classname = "ProMCHeaderFile";
+
+message ProMCHeader {
+
+    // used to store the global information for all events
+    optional int32   id1=1;       // flavour code of first parton
+    optional int32   id2=2;       // flavour code of second parton
+    optional int32   pdf_id1=3;   // LHAPDF set id of first parton 
+    optional int32   pdf_id2=4;   // LHAPDF set id of second parton
+    optional double  x1=5;        // fraction of beam momentum carried by first parton (”beam side”)
+    optional double  x2=6;        // fraction of beam momentum carried by second parton (”target side”)
+    optional double  scalepdf=7;  // Q-scale used in evaluation of PDF’s (in GeV)
+    optional int32   pdf1=8;      //  PDF (id1, x1, Q) This should be of the form x*f(x)
+    optional int32   pdf2=9;      //  PDF (id2, x2, Q) This should be of the form x*f(x)
+    optional double  eCM=10;      // CM energy
+    optional double  s=11;        // CM energy
+    optional string  name=12;     // process name 
+    optional int32   code=13;     // process code 
+    optional double cross_section=14;       //  cross section in pb
+    optional double cross_section_error=15; //  error associated with this cross section in pb 
+    optional  int32  MomentumUnit=16;     // values are MEV or GEV
+    optional  int32  LengthUnit=17;       // values are MM or CM
+    optional  string NameMomentumUnit=18; // return the unit designation as a string
+    optional  string NameLengthUnit=19;   // return the unit designation as a string 
+    optional double weight=20;            // event weight
+    optional double requested_events=21;  // total number of requested events 
+
+
+   // map to store particle data (names, masse)
+   message ParticleData {
+         required sint32 id    =1;     // PID of particle
+         required double mass  =2;     // its mass
+         required string name  =3;     // name of the particle
+         optional float  width =4;     // width
+         optional float  lifetime =5;  // lifetime
+         optional sint32 charge =6;    // charge
+   }
+
+
+  // map to store orbitrary data as key-int value 
+   message MetaInt {
+         required string key = 1;        // key for interger value 
+         required sint64 value = 2;      // value 
+   }
+
+  // map to store orbitrary data as key-int value 
+   message MetaFloat {
+         required string key = 1;        // key for interger value
+         required double value = 2;      // value
+   }
+
+  repeated ParticleData particleData = 30;  // keep all particle information 
+  repeated MetaInt      metaInt = 31;       // keep metadata as key-value (int) 
+  repeated MetaFloat    metaFloat = 32;     // keep metadata as key-value (double)
+
+}
+

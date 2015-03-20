@@ -1,0 +1,8 @@
+#!/bin/bash
+
+XDIR=`pwd`
+
+cd cpp_promc/; doxygen ../config.txt; cd $XDIR 
+cd cpp_pronlo/; doxygen ../config.txt;  cd $XDIR 
+cd cpython_promc/; epydoc --html * -o html; cd $XDIR 
+cd cpython_pronlo/; epydoc --html * -o html; cd $XDIR

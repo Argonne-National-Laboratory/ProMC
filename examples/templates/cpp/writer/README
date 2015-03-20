@@ -1,0 +1,13 @@
+# Run the code:
+# S.Chekanov
+
+
+# generate template
+promc_code
+
+# compile:
+make
+
+# run
+writer tmp.promc
+

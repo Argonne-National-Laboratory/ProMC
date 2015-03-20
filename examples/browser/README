@@ -1,0 +1,3 @@
+Test it as:
+java -cp browser_promc.jar hepsim.HepSim http://mc.hep.anl.gov/asc/hepsim/events/pp/100tev/higgs_ttbar_mg5/
+

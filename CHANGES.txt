@@ -1,0 +1,52 @@
+ProMC 1.5
+  Libraries for MC, NLO and REco (Delphes) are prebuild in share/lib
+  They are libpromc.a libpronlo.a libproreco.a
+  See changes in proto.sh
+  Also, source files are generated for each case in 
+  src/promc/ src/pronlo src/proreco 
+  Java browser was modified to include HepSim commands
+
+  More examples:
+    reader_mc - shows how to read a typical ProMC file with MC
+    reader_nlo - shows how to read a typical ProMC file with NLO
+
+ProMC 1.4
+  Support for zip64. 
+  By default, only zip32 is supported (max 65k events, 4GB limit)
+  You can set the option "inMemory" during the initialization
+  which will use zip64 which does not have this limit.
+
+  The zip64 format is detected at runtime (when reading).
+  For writing in zip64, use the constructor:
+  new ProMCBook("out/output.promc","w",true);
+  It creates zip in memory and writes at the end. This mode is good
+  for small "events", but you can write any number of such events.
+  @author S.Chekanov, E.May (ANL)
+
+ProMC 1.31
+  Several improvements in compilation.
+  ProtocolBuffers compiled as a static library and the
+  compilation tolerates the existing protoc library from the
+  system.
+  cbook is compiled with the Wall option to fix Delphes integration
+  @author S.Chekanov (ANL)
+
+ProMC 1.3
+  Jan 28, 2014
+  Added the "energy" variable  
+  Added search function for the browser
+  You can specify output directory (env variable PROMC_OUT),
+  directory with protofile (PROMC_PROTO) and directory with log file
+  (PROMC_LOG). This is useful for deployment on BlueGene/Q.
+  @author S.Chekanov (ANL)
+
+ProMC 1.2
+  June 4, 2013
+  Added random access
+  CBook: Extract the number of actual events 
+  (in addition to the required) 
+  default source templates are stored in $PROMC/src (suggested by Pavel Demin)
+  @author S.Chekanov (ANL)
+
+ProMC 1.0 May 4, 2013
+  S.Chekanov. First test ProMC version

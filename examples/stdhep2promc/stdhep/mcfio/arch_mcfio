@@ -1,0 +1,76 @@
+#
+# architecture specific information for StdHep makefiles
+# 
+UNAME = $(shell uname)
+ifeq "$(UNAME)" "IRIX"
+    IRIX6 = $(findstring 6,$(shell uname -r))
+    ifeq "$(IRIX6)" "6"
+	UNAME=IRIX64
+    endif
+endif
+
+ifndef DEBUG
+    DEBUG = none
+    DFLG =
+    SFX =
+else
+    DFLG = $(DEBUG)
+    SFX = _g
+endif
+
+ifeq "$(UNAME)" "IRIX"
+    CC=cc
+    F77=f77
+    CFLAGS= $(DFLG)
+    FFLAGS= $(DFLG)
+    MXTLIBS = -lXm -lXt -lX11 -lPW -lm
+endif
+ifeq "$(UNAME)" "IRIX64"
+    CC=cc
+    F77=f77
+    CFLAGS= $(DFLG) -n32 -mips3
+    FFLAGS= $(DFLG) -n32 -mips3
+    MXTLIBS = -lXm -lXt -lX11 -lPW -lm
+endif
+ifeq "$(UNAME)" "Linux"
+    CC=gcc
+    F77=g77
+    CFLAGS= $(DFLG) -I/usr/X11R6/include 
+    FFLAGS= $(DFLG) -fdebug-kludge -fno-second-underscore
+    MXTLIBS = -L/usr/X11R6/lib -lXm -lX11 -lXt -lXp -lXext -lm
+    #BUILD_SHARED = true
+    SHFLAG = -fPIC
+    SHEXT  = so
+endif
+ifeq "$(UNAME)" "OSF1"
+    CC=cc
+    F77=f77
+    CFLAGS= $(DFLG) 
+    FFLAGS= $(DFLG) -fpe2 -check underflow -check overflow
+    MXTLIBS = -lXm -lXt -lX11 -lm -lfor -lots
+    MAP = -Wl,-m > $@.map 2>&1
+endif
+ifeq "$(UNAME)" "SunOS"
+    CC=/opt/SUNWspro/bin/cc
+    F77=f77
+    CFLAGS= $(DFLG) -I/usr/openwin/include -I/usr/dt/include -DMOTIF12
+    FFLAGS= $(DFLG)
+    MXTLIBS = -L/usr/openwin/lib -L/usr/dt/lib -lm -lXm -lXt -lX11 -lgen \
+	   -lF77 -lM77 -lsunmath -lsocket -lnsl -R /usr/openwin/lib -R /usr/dt/lib
+endif
+ifeq "$(UNAME)" "Darwin"
+    CC=gcc
+    F77=g77
+    CFLAGS= $(DFLG) 
+    FFLAGS= $(DFLG) 
+    MXTLIBS = -lXm -lXt -lX11 -lm -lfor -lots
+    MAP = 
+endif
+
+ifndef BUILD_SHARED
+    SHX =
+else
+    SHX = _s
+endif
+
+AR=ar

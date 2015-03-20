@@ -1,0 +1,21 @@
+Examples:
+---------
+ 
+ reader_mc    - a typical example to read ProMC file (LO PS). It links "libpromc.a" 
+ reader_nlo   - a typical example to read file with NLO (like MCFM). It links "libpronlo.a" 
+ random       - simple example ro write and read ProMC file using random numbers
+ promc2root   -  shows how to convert ProMC to ROOT
+ hepmc2promc  -  shows how to convert HEPMC to ProMC
+ stdhep2promc - shows how to convvert stdhep to ProMC
+ python       - simple Python reader
+ pythia       - shows how to make ProMC file from PYTHIA
+
+
+
+ Advanced:
+ ---------
+ promc_split - shows how to make a program to split a ProMC file
+ browser     - shows how to build a browser in Java
+
+S.Chekanov (ANL) 
+ 

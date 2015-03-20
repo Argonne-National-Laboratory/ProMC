@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# run setup.sh first!
+cp -r $PROMC/src .
+make
+
+Example:
+# hepmc2promc HiggsTTbar.hepmc HiggsTTbar.promc "Higgs to ttbar 13 GeV" 
+

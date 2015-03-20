@@ -1,0 +1,46 @@
+#!/bin/bash
+# Check ProMC information  
+
+
+"exec" "python" "-Wignore" "$0" "$@"
+
+__version__ = 'ProMC'
+__author__  = 'Sergei Chekanov  (chakanau@hep.anl.gov)'
+__doc__     = 'Dump information stored in the ProMC file'
+
+
+import os,sys
+#print 'Number of arguments:', len(sys.argv), 'arguments.'
+
+if len(sys.argv) != 2:
+      print "Usage : promc_dump [input ProMC file]"
+      sys.exit(0);
+
+print "Reading file=",sys.argv[1]
+
+import zipfile
+z = zipfile.ZipFile(sys.argv[1], "r")
+for filename in z.namelist():
+        print filename
+        #bytes = z.read(filename)
+        #print len(bytes)
+
+import datetime
+import zipfile
+
+def print_info(archive_name):
+    zf = zipfile.ZipFile(archive_name)
+    for info in zf.infolist():
+        #print info.filename
+        #print 'Comment:\t', info.comment
+        print 'Modified:\t', datetime.datetime(*info.date_time)
+        print 'System:\t\t', info.create_system, '(0 = Windows, 3 = Unix)'
+        print 'ZIP version:\t', info.create_version
+        #print 'Compressed:\t', info.compress_size, 'bytes'
+        #print 'Uncompressed:\t', info.file_size, 'bytes'
+        break
+
+print  ""
+print  print_info(sys.argv[1])
+print "Events=",z.read("promc_nevents")
+print "Description=",z.read("promc_description")

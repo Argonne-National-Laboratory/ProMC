@@ -1,0 +1,44 @@
+#!/bin/bash
+# Extract self description  
+
+
+"exec" "python" "-Wignore" "$0" "$@"
+
+__version__ = 'ProMC'
+__author__  = 'Sergei Chekanov  (chakanau@anl.gov)'
+__doc__     = 'Extract self description from a ProMC files'
+
+
+import os,sys
+#print 'Number of arguments:', len(sys.argv), 'arguments.'
+
+if len(sys.argv) != 2:
+      print "Usage : promc_proto  [input ProMC file]"
+      sys.exit(0);
+
+print "Reading file=",sys.argv[1]
+
+
+dir="./proto"
+if not os.path.exists(dir):
+    os.makedirs(dir)
+
+import zipfile
+
+
+def protoextract(z,dir,key):
+    try:
+       f=open(dir+"/"+key,'w')
+       f.write(z.read(key)) # 
+       f.close()
+       print "Generated=",dir+"/"+key
+    except KeyError:
+       print 'ERROR: Did not find %s layout!' % key
+   
+z=zipfile.ZipFile(sys.argv[1], "r")
+print "Events=",z.read("promc_nevents")
+print "Description=",z.read("promc_description")
+protoextract(z,dir,"ProMCHeader.proto")
+protoextract(z,dir,"ProMCStat.proto")
+protoextract(z,dir,"ProMC.proto")
+protoextract(z,dir,"ProMCDescription.proto")

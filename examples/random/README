@@ -1,0 +1,18 @@
+# How to write and read ProMC file
+# This example writes random numbers and then read them back
+# S.Chekanov (ANL)
+
+# link template for data (self-describing file)
+ln -s $PROMC/proto/promc  proto
+
+# generate the code
+promc_code        
+
+# compile
+make
+
+# run writer:
+./writer
+
+# run reader
+./reader           

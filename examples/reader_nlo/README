@@ -1,0 +1,13 @@
+Reading a typical NLO file (MCFM, for example)
+--------------------------------------------------------
+
+1) Get an example file:
+   wget http://mc.hep.anl.gov/asc/hepsim/events/pp/100tev/ttbar_mcfm/ttbar_0000000.promc 
+
+2) Setup ROOT and compile: "make"
+
+3) ./reader_nlo ttbar_0000000.promc 
+
+
+S.Chekanov (ANL)
+March 2014

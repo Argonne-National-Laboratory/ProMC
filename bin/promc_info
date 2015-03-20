@@ -1,0 +1,75 @@
+#!/bin/bash
+# Check ProMC information  
+
+"exec" "python" "-Wignore" "$0" "$@"
+
+__version__ = 'ProMC'
+__author__  = 'Sergei Chekanov  (chekanov@anl.gov)'
+__doc__     = 'Check information about the current ProMC file'
+
+import os,sys
+#print 'Number of arguments:', len(sys.argv), 'arguments.'
+
+if len(sys.argv) != 2:
+      print "Usage : promc_info [input ProMC file]"
+      sys.exit(0);
+
+print "Reading file=",sys.argv[1]
+
+import zipfile
+z = zipfile.ZipFile(sys.argv[1], "r")
+import datetime
+import zipfile
+
+def print_info(archive_name):
+    zf = zipfile.ZipFile(archive_name)
+    for info in zf.infolist():
+        #print info.filename
+        #print 'Comment:\t', info.comment
+        print 'Modified:\t', datetime.datetime(*info.date_time)
+        print 'System:\t\t', info.create_system, '(0 = Windows, 3 = Unix)'
+        print 'ZIP version:\t', info.create_version
+        #print 'Compressed:\t', info.compress_size, 'bytes'
+        #print 'Uncompressed:\t', info.file_size, 'bytes'
+        break
+
+print  ""
+print "ProMC version=",z.read("version")
+
+
+
+def isExist(key):
+  try:
+     z.read(key)  
+     return True
+  except KeyError:
+     return False 
+
+
+
+print  print_info(sys.argv[1])
+
+
+print "Nr of events:",z.read("promc_nevents")
+print "Description :",z.read("promc_description")
+
+
+if isExist("logfile.txt"):
+  print "Log file: Log file logfile.txt is attached"
+else:
+  print "Log file:  not attached"
+
+
+if isExist("ProMC.proto")==True and isExist("ProMCHeader.proto")==True and isExist("ProMCDescription.proto")==True :
+   print "Self-description: Proto layouts are attached. Self-describing file"
+else:
+   print "Self-description: Not self-describing file format. No Proto layouts are attached."
+
+
+if isExist("ProMCStat.proto")==True:
+   print "Statistics: Stat record is attached"
+else:
+   print "Statistics: No statistics record is attached"
+
+
+ 

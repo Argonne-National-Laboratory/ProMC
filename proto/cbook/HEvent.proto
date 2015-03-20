@@ -1,0 +1,31 @@
+// This ProtocolBuffers file was used to generate structural ntuples for EFile
+// class, which contains zipped entries.
+// If Protocol buffers are installed http://code.google.com/p/protobuf/,
+// one can generate necessary code as:
+// protoc --java_out=src    HEvent.proto
+// protoc --cpp_out=CBook/src  HEvent.proto
+// S.Chekanov.
+
+package promc;
+option java_package = "promc.io";
+option java_outer_classname = "PEventFile";
+
+message HEvent {
+  optional int64   id = 1;
+  optional string  name=2; 
+  repeated double  da = 3 [packed=true];
+  repeated int64   ida= 4 [packed=true];
+
+  message Entry {
+    optional string  name=1; 
+    repeated double  da=3    [packed=true];
+    repeated int64   ida=2   [packed=true];
+  }
+
+  message Group {
+    optional string  name=1;
+    repeated Entry  entry=2;
+  }
+
+  repeated Group  group = 5;
+}

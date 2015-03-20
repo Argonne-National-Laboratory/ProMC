@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Created-By: 1.7.0_55-b13 (Oracle Corporation)
+Built-By: Sergei Chekanov (ANL)
+Version: 1.0
+Main-Class: 
+Class-Path: 
+

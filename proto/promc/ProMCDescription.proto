@@ -1,0 +1,19 @@
+// ProMC description record.
+// See: https://atlaswww.hep.anl.gov/asc/promc/
+// This is a template for Monte Carlo event record based on variable number of bytes
+// Author: 
+// S.Chekanov. chekanov@anl.gov (ANL)
+
+
+package promc;
+option java_package = "promc.io";
+option java_outer_classname = "ProMCDescriptionFile";
+
+message ProMCDescription {
+
+    required uint64  version=1;           // ProMC version 
+    required uint64  events=2;            // number of events 
+    required string  description=3;       // description 
+    required uint64  timestamp=4;         //  timestamp seince 1970 
+}
+

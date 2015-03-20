@@ -1,0 +1,87 @@
+#!/bin/bash
+#
+# Configuration script, to be run before compilation
+#
+# S.Chekanov
+
+CURRENT_DIR=`pwd`
+
+
+#source setup.sh
+
+
+# destination
+DIR=$CURRENT_DIR
+
+if [ ! -d "${DIR}/src" ]; then
+  mkdir -p ${DIR}/src
+fi
+
+if [ ! -d "${DIR}/java/src" ]; then
+  mkdir -p ${DIR}/java/src
+fi
+
+if [ ! -d "${DIR}/python/modules" ]; then
+  mkdir -p ${DIR}/python/modules
+fi
+
+
+cp -f $PROMC/proto/*.cc $CURRENT_DIR/src/
+cp -f $PROMC/proto/*.h  $CURRENT_DIR/src/
+
+
+if [ ! -d "./proto" ]; then
+   echo "Error: Directory \"proto\" with templates does not exist!"
+   echo "       Exit!"
+   exit 1;
+fi
+
+
+ 
+
+cd $CURRENT_DIR/proto
+for filename in *.proto
+do
+  INPUT=${filename}
+  echo "Processing $INPUT proto file"
+  $PROMC/bin/protoc --cpp_out=$DIR/src/  $INPUT
+  $PROMC/bin/protoc --java_out=$CURRENT_DIR/java/src $INPUT
+  $PROMC/bin/protoc --python_out=$CURRENT_DIR/python/modules $INPUT
+done
+
+# C++ template reader
+if [ ! -f $CURRENT_DIR/Makefile ]
+then
+   cp -f $PROMC/templates/cpp/Makefile $CURRENT_DIR/
+    echo "Creating Makefile template"
+fi
+
+if [ ! -f $CURRENT_DIR/reader.cc ]
+then
+   cp -f $PROMC/templates/cpp/reader.cc $CURRENT_DIR/
+   echo "Creating reader.cc template"
+fi
+
+# Java template reader
+if [ ! -f $CURRENT_DIR/java/ReadProMC.java ]
+then
+   cp -f $PROMC/templates/java/ReadProMC.java $CURRENT_DIR/java/
+   echo "Creating java/ReadProMC.java template"
+fi
+if [ ! -f $CURRENT_DIR/java/run.sh ]
+then
+   cp -f $PROMC/templates/java/run.sh $CURRENT_DIR/java/
+fi
+
+
+# Python template reader
+if [ ! -f $CURRENT_DIR/python/reader.py ]
+then
+   cp -f $PROMC/templates/python/reader.py $CURRENT_DIR/python/
+   echo "Creating python/reader.py template"
+fi
+
+
+echo " -> C++  code in src/ is done!"
+echo " -> Java code in java/src is done!"
+echo " -> Python code in python/modules is done!"

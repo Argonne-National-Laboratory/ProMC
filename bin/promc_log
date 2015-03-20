@@ -1,0 +1,35 @@
+#!/bin/bash
+# Extract self description  
+
+
+"exec" "python" "-Wignore" "$0" "$@"
+
+__version__ = 'ProMC'
+__author__  = 'Sergei Chekanov  (chakanau@anl.gov)'
+__doc__     = 'Extract logfile and rename it'
+
+
+import os,sys
+#print 'Number of arguments:', len(sys.argv), 'arguments.'
+
+if len(sys.argv) != 2:
+      print "Usage : promc_log  [input ProMC file]"
+      sys.exit(0);
+
+print "Reading file=",sys.argv[1]
+logfile=sys.argv[1].replace(".promc",".log")
+
+
+import zipfile
+z = zipfile.ZipFile(sys.argv[1], "r")
+
+try:
+   ff="logfile.txt"
+   f=open(logfile,'w')
+   f.write(z.read(ff)) 
+   f.close()
+   print "Generated=",logfile
+except KeyError:
+   print 'ERROR: Did not find %s' % ff
+   print '       logfile.txt was not attached'
+

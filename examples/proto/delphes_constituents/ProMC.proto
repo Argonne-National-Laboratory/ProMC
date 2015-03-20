@@ -1,0 +1,172 @@
+// ProMC event record for Delphes with jet constituents (clusters)
+// S.Chekanov. ANL 
+
+package promc;
+option java_package = "promc.io";
+option java_outer_classname = "ProMC";
+
+message ProMCEvent {
+
+
+   // Event
+   message Event {
+         optional int32 Number = 1;       // Number
+         optional int32 Process_ID = 2;   // ID unique signal process id
+         optional int32 MPI       = 3;    // MPI number of multi parton interactions
+         optional int32 ID1       = 4;    // ID1 flavour code of first parton
+         optional int32 ID2       = 5;    // ID2 flavour code of second parton
+         optional float PDF1      = 6;    // PDF1 PDF (id1, x1, Q)
+         optional float PDF2      = 7;    // PDF2 PDF (id2, x2, Q)
+         optional float X1        = 8;    // X1 fraction of beam momentum carried by first parton ("beam side")
+         optional float X2        = 9;    // X2 fraction of beam momentum carried by second parton ("target side")
+         optional float Scale_PDF = 10;   // Scale PDF Q-scale used in evaluation of PDF's (in GeV) |
+         optional float Alpha_QED = 11;   // AlphaQED QED coupling, see hep-ph/0109068
+         optional float Scale     = 12;   // Scale   energy scale, see hep-ph/0109068
+         optional float Alpha_QCD = 13;   // QCD coupling, see hep-ph/0109068
+         optional double Weight   = 14;   // event weight
+   }
+
+
+  // clusters (jet constituents) 
+   message Clusters {
+    repeated sint64  Px=1           [packed=true]; // pX
+    repeated sint64  Py=2           [packed=true]; // pY
+    repeated sint64  Pz=3           [packed=true]; // pZ
+    repeated sint64  E=4            [packed=true]; // E
+   }
+
+
+  // generator (truth) particles
+  message Particles {
+    repeated uint32  id=1           [packed=true]; // ID in the generator
+    repeated sint32  pdg_id=2       [packed=true]; // unique integer ID specifying the particle type
+    repeated uint32  status=3       [packed=true]; // integer specifying the particle’s status (i.e. decayed or not)
+    repeated uint64  mass=4         [packed=true]; // mass
+    repeated sint64  Px=5           [packed=true]; // pX
+    repeated sint64  Py=6           [packed=true]; // pY
+    repeated sint64  Pz=7           [packed=true]; // pZ
+    repeated uint32  mother1=8      [packed=true]; // first mother
+    repeated uint32  mother2=9      [packed=true]; // second mother
+    repeated uint32  daughter1=10    [packed=true]; // first daughter
+    repeated uint32  daughter2=11   [packed=true]; // second daughter
+    repeated sint32  barcode=12     [packed=true]; // barcode if used. For Delphes: isPU  
+    repeated sint32  X=13           [packed=true]; // vertex X position
+    repeated sint32  Y=14           [packed=true]; // vertex Y position
+    repeated sint32  Z=15           [packed=true]; // vertex Z position
+    repeated uint32  T=16           [packed=true]; // time
+    repeated uint64  weight=17      [packed=true]; // particle weight
+    repeated sint32  charge=18      [packed=true]; // Charge
+    // Delphes specific
+    repeated uint64  PT=19           [packed=true]; // PT
+    repeated sint64  Eta=20          [packed=true]; // Eta
+    repeated sint64  Phi=21          [packed=true]; // Phi
+   }
+
+
+  // reconstructed Jet 
+   message Jets {
+        repeated uint64  PT=1            [packed=true]; // PT 
+        repeated sint64  Eta=2           [packed=true]; // Eta
+        repeated sint64  Phi=3           [packed=true]; // Phi 
+        repeated uint64  Mass=4          [packed=true]; // Mass 
+        repeated sint32  Btag=5          [packed=true]; // BTag 
+        repeated sint32  Tautag=6        [packed=true]; // TauTag 
+        repeated sint32  Charge=7        [packed=true]; // Charge 
+        repeated uint32  DeltaEta=8      [packed=true]; // Delta Eta
+        repeated uint32  DeltaPhi=9      [packed=true]; // Delta Phi 
+        repeated sint32  HadOverEem=10    [packed=true]; // Ehad/Eem 
+        optional Clusters clusters = 11;       // information on clusters (jet constituents) 
+   }
+
+
+   // b-tagged jets
+   message BLJets {
+        repeated uint64  PT=1            [packed=true]; // PT
+        repeated sint64  Eta=2           [packed=true]; // Eta
+        repeated sint64  Phi=3           [packed=true]; // Phi
+        repeated uint64  Mass=4          [packed=true]; // Mass
+        repeated sint32  Btag=5          [packed=true]; // BTag
+        repeated sint32  TauTag=6        [packed=true]; // TauTag
+        repeated sint32  Charge=7        [packed=true]; // Charge
+        repeated uint32  DeltaEta=8      [packed=true]; // Delta Eta
+        repeated uint32  DeltaPhi=9      [packed=true]; // Delta Phi
+        repeated sint32  HadOverEem=10    [packed=true]; // Ehad/Eem
+   }
+
+
+  // GenJet
+   message GenJets {
+        repeated uint64  PT=1            [packed=true]; // PT
+        repeated sint64  Eta=2           [packed=true]; // Eta 
+        repeated sint64  Phi=3           [packed=true]; // Phi 
+        repeated uint64  Mass=4          [packed=true]; // Mass 
+        repeated sint32  Btag=5          [packed=true]; // BTag 
+        repeated sint32  TauTag=6        [packed=true]; // TauTag  
+        repeated sint32  Charge=7        [packed=true]; // Charge
+        repeated uint32  DeltaEta=8      [packed=true]; // Delta Eta
+        repeated uint32  DeltaPhi=9      [packed=true]; // Delta Phi
+        repeated sint32  HadOverEem=10    [packed=true]; // Ehad/Eem
+   }
+
+   // Electrons 
+   message Electrons {
+        repeated uint64  PT=1            [packed=true]; // PT
+        repeated sint64  Eta=2           [packed=true]; // Eta
+        repeated sint64  Phi=3           [packed=true]; // Phi
+        repeated sint32  Charge=4        [packed=true]; // Charge
+   }
+
+  // Reconstructed Muons 
+   message Muons {
+        repeated uint64  PT=1            [packed=true]; // PT
+        repeated sint64  Eta=2           [packed=true]; // Eta
+        repeated sint64  Phi=3           [packed=true]; // Phi
+        repeated sint32  Charge=4        [packed=true]; // Charge
+   }
+ 
+  // Charged Tracks 
+   message Tracks {
+        repeated uint64  PT=1            [packed=true]; // PT
+        repeated sint64  Eta=2           [packed=true]; // Eta
+        repeated sint64  Phi=3           [packed=true]; // Phi
+        repeated sint32  Charge=4        [packed=true]; // Charge
+        repeated sint32  X=5             [packed=true]; // vertex X position
+        repeated sint32  Y=6             [packed=true]; // vertex Y position
+        repeated sint32  Z=7             [packed=true]; // vertex Z position
+        repeated sint32  XOuter=8        [packed=true]; // XOuter
+        repeated sint32  YOuter=9        [packed=true]; // YOuter
+        repeated sint32  ZOuter=10       [packed=true]; // ZOuter
+        repeated sint32  EtaOuter=11     [packed=true]; // EtaOuter
+        repeated sint32  PhiOuter=12     [packed=true]; // PhiOuter
+   }
+
+   // reconstructed photons
+   message Photons {
+        repeated uint64  PT=1            [packed=true]; // PT
+        repeated sint64  Eta=2           [packed=true]; // Eta
+        repeated sint64  Phi=3           [packed=true]; // Phi
+        repeated sint64  Energy=4        [packed=true]; // Energy 
+
+   }
+
+  // missing ET 
+   message MissingET {
+        repeated uint64  MET=1           [packed=true]; // MET 
+        repeated sint64  Phi=3           [packed=true]; // Phi
+   }
+
+
+   optional Event event = 1;          // information on event 
+   optional Particles particles = 2;  // information on particle 
+   optional Jets jets = 3;            // jets 
+   optional GenJets genjets = 4;      // generator jets 
+   optional BLJets bjets = 5;         // b-jets
+   optional Electrons electrons = 6;  // electrons
+   optional Muons     muons = 7;      // muons 
+   optional Tracks    tracks= 8;      // tracks 
+   optional Photons   photons= 9;     // photons 
+   optional MissingET  missingET= 10; // missing ET
+
+ 
+}
+

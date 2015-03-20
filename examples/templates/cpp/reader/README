@@ -1,0 +1,9 @@
+This example shows how to read ProMC file in Java.
+
+How to compile using self-descriptive code:
+
+promc_proto ../writer/out.promc
+promc_code 
+make
+
+S.Chekanov

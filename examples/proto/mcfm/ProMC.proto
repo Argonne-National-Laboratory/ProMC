@@ -1,0 +1,50 @@
+// ProMC event record for a typical NLO program (such as MCFM NLO).
+// See: https://atlaswww.hep.anl.gov/asc/promc/
+// unlike the HEPMC-style, it has only a basic information about particles
+// Instead, you can add more information about unweighted events from a NLO.
+// For example, use the array "idata" to put PDF uncertainties as:
+// err_i=int ( (PDF_i/PDF(0)) * 1000). For PDF's like CT10 (52 sets),
+// you will include PDF errors (in terms of 0.1%) and encode them as varints 
+// to save space.
+// Use the fdata array to add any float value if needed.
+// Weight is the event weight. 
+// This program was tested on BlueGene/Q at ANL and replaced CERNLIB and ROOT
+// calls in MCFM.
+//
+// Author: 
+// S.Chekanov. chekanov@anl.gov (ANL)
+// Jan 2014
+package promc;
+option java_package = "promc.io";
+option java_outer_classname = "ProMC";
+
+message ProMCEvent {
+
+   // Event information
+   message Event {
+         optional int32 Number = 1;      // Number
+         optional int32 Process_ID = 2;  // ID unique signal process id
+         optional float Weight     = 3;  // Global event weight
+         repeated float  fdata   = 4;     // event info as you want (array, float) 
+         repeated sint64 idata   = 5;     // event info as you want (array, varint)
+
+   }
+
+
+  // Particle definition for NLO programs
+  message Particles { 
+    repeated uint32  id=1           [packed=true]; // ID in the generator
+    repeated sint32  pdg_id=2       [packed=true]; // unique integer ID specifying the particle type 
+    repeated sint64  Energy=3       [packed=true]; // Energy
+    repeated sint64  Px=4           [packed=true]; // pX 
+    repeated sint64  Py=5           [packed=true]; // pY 
+    repeated sint64  Pz=6           [packed=true]; // pZ
+   }
+
+     // even record for this event
+     optional Event        event = 1;            // information on event
+     optional Particles    particles = 2;        // information on generator-level particles 
+ 
+ 
+}
+

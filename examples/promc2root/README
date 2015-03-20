@@ -1,0 +1,19 @@
+PROMC to ROOT converter.
+-----------------------
+
+1) Get an example file:
+   wget http://atlaswww.hep.anl.gov/asc/promc/download/Pythia8.promc
+
+2) Setup ROOT and compile: "make"
+
+3) Create ROOT file:
+   ./promc2root Pythia8.promc Pythia8.root
+
+General syntax:
+
+./promc2root <file.promc> <file.root>
+
+
+
+S.Chekanov (ANL)
+March 2014

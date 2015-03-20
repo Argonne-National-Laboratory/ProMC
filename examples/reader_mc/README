@@ -1,0 +1,13 @@
+Reading a typical Monte Carlo file (PYTHIA, for example)
+--------------------------------------------------------
+
+1) Get an example file:
+   wget http://atlaswww.hep.anl.gov/asc/promc/download/Pythia8.promc
+
+2) Setup ROOT and compile: "make"
+
+3) ./reader_mc Pythia8.promc
+
+
+S.Chekanov (ANL)
+March 2014

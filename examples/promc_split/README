@@ -1,0 +1,22 @@
+This is a program to split ProMC files.
+======================================
+July 2013
+
+
+Example:
+promc_split file.promc 10  # split the file into 10 files in the directory out/
+
+If you use non-standard layout of data, first do:
+
+1) promc_proto file.promc # extracts ProtoBuff layouts 
+2) promc_code             # generates C++ headers 
+3) make                   # compiles the split program               
+4) ./promc_split file.promc 10 # creates 10 files from the original in the directory out/
+
+You do not need the steps 1-3 when splitting files which have exactly the same stracture as the previus file.
+
+S.Chekanov and K.Strand
+ANL
+ 
+
+ 
