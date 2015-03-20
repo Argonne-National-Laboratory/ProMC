@@ -31,14 +31,12 @@ Read the manual: https://atlaswww.hep.anl.gov/asc/wikidoc/doku.php?id=asc:promc
 <h2>How to install</h2>
 
 1) Compile:
-
   ./build.sh
 
 2) Install libraries and include files to a 
    given directory (must have permissions!):
-
-   ./install.sh [promc_dir] [hepmc_dir]
-
+ 
+  ./install.sh [promc_dir] [hepmc_dir]
 
  (the location of HEPMC libraries are optional)
 
@@ -48,29 +46,20 @@ Read the manual: https://atlaswww.hep.anl.gov/asc/wikidoc/doku.php?id=asc:promc
    source  [promc_dir]/setup.sh
 
 
+<h2>Uninstall</h2>
 
-To unistall ProMC:
-=================
 ./uninstall.sh
 
+Clear the build directory:
 
-
-Make only proto:
-./proto.sh
-
-
-Clear build directory:
 ./clear.sh
 
 
 Examples:
-===============
+========
 Look at the examples in $PROMC/examples directory
 
 
-
-S.Chekanov (ANL)
-E.May (ANL) 
-P. Van Gemmeren (ANL)  
+S.Chekanov (ANL), E.May (ANL), P. Van Gemmeren (ANL) 
 
 October 2014
