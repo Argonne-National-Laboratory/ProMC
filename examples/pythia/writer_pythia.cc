@@ -138,22 +138,71 @@ int main() {
   ProMCEvent_Particles  *pa= promc.mutable_particles();
 
   for (int i =0; i<pythia.event.size(); i++) {
-  pa->add_pdg_id( pythia.event[i].id() );
-  pa->add_status(  pythia.event.statusHepMC(i) ); // particle status in HEPMC style 
-  pa->add_px( (int)(pythia.event[i].px()*kEV) );
-  pa->add_py(  (int)(pythia.event[i].py()*kEV) );
-  pa->add_pz(   (int)(pythia.event[i].pz()*kEV)  );
-  pa->add_mass( (int)(pythia.event[i].m()*kEV) ); 
+
+
+  // some checks to make sure that we write large numbers correctly
+  double ee=pythia.event[i].e()*kEV;
+  double px=pythia.event[i].px()*kEV;
+  double py=pythia.event[i].py()*kEV;
+  double pz=pythia.event[i].pz()*kEV;
+  double mm=pythia.event[i].m()*kEV;
+  double xx=pythia.event[i].xProd()*kL;
+  double yy=pythia.event[i].yProd()*kL;
+  double zz=pythia.event[i].zProd()*kL;
+  double tt=pythia.event[i].tProd()*kL;
+
+  double maxval=2147483647; // std::numeric_limits<int>::min() 
+  double minval=0.5;
+  bool  err=false;
+  if (abs(px)>=maxval || abs(py)>=maxval || abs(pz)>= maxval ||
+      abs(ee)>=maxval || abs(mm)>=maxval || abs(xx)>= maxval ||
+      abs(yy)>=maxval || abs(zz)>=maxval || abs(tt)>= maxval) err=true;
+  if (err){
+          cout << "Event =" << i << " Value is too large for varint. Change units: " << kEV << " or " << kL << endl;
+          cout << ee << " " << px << " " << pz << " " << ee << " " << mm << " " << xx << " " << yy << " " << zz << " " << tt << endl;
+          exit(1);
+          }
+
+    // we do not stop when see very low energy 
+    /*
+    err=false;
+    if ((abs(px)<minval && abs(px)>0) ||
+        (abs(py)<minval && abs(py)>0) ||
+        (abs(pz)<minval && abs(pz)>0) ||
+        (abs(ee)<minval && abs(ee)>0) ||
+        (abs(mm)<minval && abs(mm)>0) ||
+        (abs(xx)<minval && abs(xx)>0) ||
+        (abs(yy)<minval && abs(yy)>0) ||
+        (abs(zz)<minval && abs(zz)>0) ||
+        (abs(tt)<minval && abs(tt)>0) ) err=true;
+    if (err){
+          //cout << "Event =" << i << " Value is too small for varint. Change units: kEV=" << kEV << " kL=" << kL << endl;
+          //cout << ee << " " << px << " " << pz << " " << ee << " " << mm << " " << xx << " " << yy << " " << zz << " " << tt << endl;
+          //exit(1);
+          }
+     */
+
+  int pdgid=pythia.event[i].id();
+  int status=pythia.event[i].statusHepMC();
+
+  pa->add_pdg_id( pdgid );
+  pa->add_status(  status );
+  pa->add_px( (int)px );
+  pa->add_py( (int)py );
+  pa->add_pz( (int)pz  );
+  pa->add_mass( (int)mm );
+  pa->add_energy( (int)ee );
   pa->add_mother1( pythia.event[i].mother1()  );
   pa->add_mother2( pythia.event[i].mother2()  );
   pa->add_daughter1( pythia.event[i].daughter1()  );
   pa->add_daughter2( pythia.event[i].daughter2()   );
-  pa->add_barcode( i  ); // dummy 
+  pa->add_barcode( 0 ); // dummy 
   pa->add_id( i  );
-  pa->add_x( int(pythia.event[i].xProd()*kL)  );
-  pa->add_y( int(pythia.event[i].yProd()*kL)  );
-  pa->add_z( int(pythia.event[i].zProd()*kL)  );
-  pa->add_t( int(pythia.event[i].tProd()*kL)  );
+  pa->add_x( (int)xx  );
+  pa->add_y( (int)yy  );
+  pa->add_z( (int)zz  );
+  pa->add_t( (int)tt  );
+
   }
 
    epbook->write(promc); // write event
