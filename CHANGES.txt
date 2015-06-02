@@ -1,3 +1,7 @@
+ProMC 1.5. Update 2015 (May)
+  Pileup mixer implemented in the Java browser jar file (Daniel Wilbern)
+  A tool to extract N events 
+
 ProMC 1.5
   Libraries for MC, NLO and REco (Delphes) are prebuild in share/lib
   They are libpromc.a libpronlo.a libproreco.a

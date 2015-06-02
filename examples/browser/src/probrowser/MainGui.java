@@ -461,6 +461,7 @@ public class MainGui {
 		model.addColumn("Y (mm)");
 		model.addColumn("Z (mm)");
 		model.addColumn("T (s)");
+                model.addColumn("BarCode");
 		model.setRowCount(0);
 		table.setModel(model);
 
@@ -507,6 +508,7 @@ public class MainGui {
                 if (pa.getPyCount()>1)   pyM=true;
                 if (pa.getPzCount()>1)   pzM=true;
                 if (pa.getIdCount()>1)   idM=true; 
+
                 else idM=false; 
  
 
@@ -593,7 +595,7 @@ public class MainGui {
 						new Integer(d1), new Integer(d2), new Double(px), 
 						new Double(py), new Double(pz), new Double(ee), new Double(m),
 						new Double(x), new Double(y), new Double(z),
-						new Double(t) });
+						new Double(t), new Integer(barcode) });
 
 			}
 		} // not null
