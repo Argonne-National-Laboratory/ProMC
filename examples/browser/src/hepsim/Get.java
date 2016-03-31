@@ -32,9 +32,9 @@ private static String toDir="";
 			website = new URL(inputURL);
 			Files.copy(website.openStream(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (MalformedURLException e) {
-			HepSim.ErrorMessage("No such file: "+inputURL);
+			HepSim.ErrorMessage("No such location: "+inputURL);
 		} catch (IOException e) {
-			HepSim.ErrorMessage("Error when saving file "+dest);
+			HepSim.ErrorMessage("Error for "+dest);
 		}
 
 
@@ -79,10 +79,29 @@ private static String toDir="";
                 String pattern="";
 
 
-		if (xlength <2) {
-			HepSim.ErrorMessage("Usage: The command takes 2, 3, 4 or 5 arguments:  URL, OUTPUT directory, Nr of threads (optional), Nr of files (optional), pattern. Exit!");
+		if (xlength <1) {
+			HepSim.ErrorMessage("Usage: The command takes 1, 2, 3, 4 or 5 arguments:  URL, OUTPUT directory, Nr of threads (optional), Nr of files (optional), pattern. Exit!");
 			System.exit(1);
+
 		}
+
+                // output goes to the same name
+                if (xlength ==1) {
+                   toDir=args[0].trim();
+
+                   // if this is URL, not datasetname, extract the name
+                   if (HepSim.isValidURL(toDir)) {
+                      String sss[] = toDir.split("/");
+                      toDir=sss[sss.length-1];
+                      toDir=toDir.replace("/",""); 
+                   } 
+
+                }
+
+                // here the output is given explicitly 
+                if (xlength>1) {
+                   toDir=args[1].trim();
+                }
 
 
 		if (xlength >= 3) {
@@ -117,8 +136,29 @@ private static String toDir="";
                 }
 
 
+
 		String surl=args[0].trim();
+                //System.out.println(surl);
+                String[] parts = surl.split("%");
+
+                // if reconstructed files, find correct URL
+                if (parts.length==2){
+                       surl=parts[0];
+                } else if (parts.length>2){ 
+                      HepSim.ErrorMessage("HepSim does not support download of multiple datasets at the same time.");
+                      System.exit(1);
+                  }
+
                 surl=HepSim.urlRedirector(surl);
+                //System.out.println(surl);
+
+                // create reconstructed-level URL
+                if (parts.length==2){
+                   surl=surl+"/"+parts[1];
+                 }
+
+
+                // another check
                 if (surl.length()<5) {
                       HepSim.ErrorMessage("Exit!");
                       System.exit(1); 
@@ -126,7 +166,6 @@ private static String toDir="";
 
 
 
-		toDir=args[1].trim();
 
 		if (!HepSim.isValidURL(surl)) {
 			HepSim.ErrorMessage("HepSim: This is not valid URL link for data download. Exit!");

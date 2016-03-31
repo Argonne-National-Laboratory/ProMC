@@ -51,10 +51,15 @@ int main(int argc, char **argv)
 	std::vector<Int_t> m_barcode,m_id,m_status,m_pdg_id,m_m1, m_m2,m_d1,m_d2;
 	std::vector<Double32_t> m_Px, m_Py, m_Pz, m_E, m_M, m_weight;
 	std::vector<Double32_t> m_x, m_y, m_z, m_t;
-
+        std::vector<Double32_t> m_charge;
 
 
 	ProMCBook *epbook = new ProMCBook( infile.c_str(),"r");
+
+        // if ProMC file is made using zip64, use
+        //ProMCBook *epbook = new ProMCBook( infile.c_str(),"r",true);
+
+
 	cout << "\n\n Start to read this file.." << endl;
 	// get the version number
 	int  h=epbook->getVersion();
@@ -73,6 +78,22 @@ int main(int argc, char **argv)
 	double kLe=(double)(header.lengthunit());
 	cout << "Length unit=" << kLe << endl;
 
+        // do you need Particle data and names?
+        // this is optional. You may need particle masses and names
+        // stored directly inside the ProMC file
+        std::map <int,float> charges;
+
+        for (int i=0; i<header.particledata_size(); i++){
+          ProMCHeader_ParticleData p= header.particledata(i);
+          string name=p.name();
+          int    id=p.id(); 
+          int    charge=p.charge();
+          double mass=p.mass();
+          double width=p.width();
+          double lifetime = p.lifetime();
+          cout << "Reading PDG=" << i << " is= " << id << " name=" <<  name << " cha=" << charge/3.0 << endl;
+          charges[id]=charge/3.0; 
+        }
 
 	cout << "\n -> Output ROOT file =" << outfile << endl;
 	TFile * RootFile = new TFile(outfile.c_str(), "RECREATE", "ProMC record");
@@ -91,6 +112,7 @@ int main(int argc, char **argv)
 	m_tree->Branch("status",   &m_status);
 	m_tree->Branch("weight",   &m_weight);
 	m_tree->Branch("barcode",  &m_barcode);
+        m_tree->Branch("charge",  &m_charge);
 	m_tree->Branch("Px",       &m_Px);
 	m_tree->Branch("Py",       &m_Py);
 	m_tree->Branch("Pz",       &m_Pz);
@@ -115,6 +137,7 @@ int main(int argc, char **argv)
 
 		m_id.clear();
 		m_barcode.clear();
+                m_charge.clear();
 		m_Px.clear();
 		m_Py.clear();
 		m_Pz.clear();
@@ -143,6 +166,7 @@ int main(int argc, char **argv)
 			if (pa->barcode_size()==0) m_barcode.push_back(0);
 			else m_barcode.push_back(pa->barcode(j));
 			m_barcode.push_back(j);
+                        m_charge.push_back( charges[pa->id(j)] );
 			m_Px.push_back(pa->px(j)/kEV);
 			m_Py.push_back(pa->py(j)/kEV);
 			m_Pz.push_back(pa->pz(j)/kEV);

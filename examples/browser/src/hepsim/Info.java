@@ -13,6 +13,7 @@ import promc.io.*;
 /**
 
 Validate a ProMC file.
+It validates the file and print separate events when requested.
 
 @author S.Chekanov (ANL)
 

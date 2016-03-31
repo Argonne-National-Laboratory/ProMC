@@ -41,12 +41,47 @@ public class Ls {
 	public static void main (String[] args) {
 
 		long tot=0;
+                boolean simple_list=false;
+                boolean simple_list_url=false;
+
 		if (args.length > 0) {
 
                 String surl = args[0].trim();
+                String[] parts = surl.split("%");
+
+                // if reconstructed files, find correct URL
+                if (parts.length==2){
+                       surl=parts[0];
+                } else if (parts.length>2){
+                      HepSim.ErrorMessage("HepSim does not support listing multiple datasets at the same time.");
+                      System.exit(1);
+                  }
+
+
                 surl=HepSim.urlRedirector(surl);
+
+                // simple listing of files without decoration
+                if (args.length==2){
+                    String s = args[1].trim();
+                    if (s.equals("simple")) simple_list=true;
+                    if (s.equals("simple-url")) {simple_list=true; simple_list_url=true;}
+
+                    if (s.equals("simple") == false && s.equals("simple-url") == false) {
+                     HepSim.ErrorMessage("HepSim does not recognize second argument. Should be \"simple\" or  \"simple-url\"");
+                     System.exit(1);
+                    }
+
+                } 
+
+                  
+                // create reconstructed-level URL
+                if (parts.length==2){
+                   surl=surl+"/"+parts[1];
+                 }
+
+
                 if (surl.length()<5) {
-                      HepSim.ErrorMessage("Exit!");
+                      HepSim.ErrorMessage("Exit! Wrong URL!");
                       System.exit(1);
                     }
 
@@ -55,9 +90,11 @@ public class Ls {
                         System.exit(0);
                 };
 
+                       if (simple_list==false) {
+
                         System.out.println("HepSim: "+surl);
-                        System.out.format("%7s%45s%10s\n","Nr", "File name","size (kB)");
-                        int nlinse=7+45+10;
+                        System.out.format("%7s%42s%13s\n","Nr", "File name","     bytes");
+                        int nlinse=7+42+13;
                         for (int j=0; j<nlinse; j++) System.out.print("-");
                         System.out.println("");
  
@@ -70,18 +107,35 @@ public class Ls {
 				String sizes=(s1.get(1)).trim();
 				long xs = Long.parseLong(sizes);
 				tot=tot+xs;
-                                System.out.format("%7s%45s%10s\n",Integer.toString(j+1),sfile,sizes);
+                                System.out.format("%7s%42s%13s\n",Integer.toString(j+1),sfile,sizes);
 
 			};
 
-			double xdd=0.001*tot;
+			double xdd=tot/(1024*1024.0);
 			String fileSize=Integer.toString((int)xdd);
                         for (int j=0; j<nlinse; j++) System.out.print("-");
                         System.out.println("");
                         System.out.format("%7s%42s%9s%3s\n","Summary:","Nr of files: "+Integer.toString(ar.size()),fileSize,"MB");
+
+                    } else { // end printing fancy text 
+                        ArrayList<ArrayList<String>>   ar= HepSim.getArray( surl );
+                        ArrayList<String> tmp = new ArrayList<String>();
+                        for (int j=0; j<ar.size(); j++) {
+                                ArrayList<String> s1= ar.get(j);
+                                String sfile=(s1.get(0)).trim();
+                                if (simple_list_url==false)System.out.println(sfile);
+                                if (simple_list_url==true) System.out.println(surl+"/"+sfile);
+
+                        };
+
+                     } 
+
+
 		} else {
-                        HepSim.ErrorMessage("Usage: It takes 1 argument:  URL of HepSim data sample!");
-                        System.exit(1);
+                        HepSim.ErrorMessage("Usage: It takes 1 argument:  URL of HepSim data sample! (or) ");
+                        HepSim.ErrorMessage(" When 2 arguments: \"[URL] simple\" -  prints file list without decoration");
+                        HepSim.ErrorMessage("                   \"[URL] simple-url\" - prints simple file list with URL");
+                       System.exit(1);
                 }
 
 

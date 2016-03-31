@@ -41,6 +41,7 @@ public class Find {
 
                 String search = args[0].trim();
                 // System.out.println("HepSim: Looking for: "+search);
+                HepSim.Init();
 
                 try {
                                 // System.out.println("Reading from URL: " + file);

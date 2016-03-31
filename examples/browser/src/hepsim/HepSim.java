@@ -58,6 +58,113 @@ public static final String ANSI_WHITE = "\u001B[37m";
         // main HepSim URL
         public static String hepsim_www="http://atlaswww.hep.anl.gov/hepsim/";
 
+        public static ArrayList<String> mirrors = new ArrayList<String>();
+
+
+
+
+/**
+ * Pings a HTTP URL. This effectively sends a HEAD request and returns <code>true</code> if the response code is in 
+ * the 200-399 range.
+ * @param surl The HTTP URL to be pinged.
+ * @param timeout The timeout in millis for both the connection timeout and the response read timeout. Note that
+ * the total timeout is effectively two times the given timeout.
+ * @return <code>true</code> if the given HTTP URL has returned response code 200-399 on a HEAD request within the
+ * given timeout, otherwise <code>false</code>.
+ */
+public static boolean ping(String surl, int timeout) {
+    // Otherwise an exception may be thrown on invalid SSL certificates:
+    surl = surl.replaceFirst("https", "http");
+
+/*
+    try {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.setConnectTimeout(timeout);
+        connection.setReadTimeout(timeout);
+        connection.setRequestMethod("HEAD");
+        int responseCode = connection.getResponseCode();
+        return (200 <= responseCode && responseCode <= 399);
+    } catch (IOException exception) {
+        return false;
+    }
+*/
+
+     try{
+                URL url = new URL(surl);
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                //HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+                int code = connection.getResponseCode();  
+                // System.out.println("code: "+code);
+                if (code>=200 && code<410) return true; 
+            } catch (Exception e) {
+                // e.printStackTrace();
+                return false;
+            }
+
+            return false;
+}
+
+
+     
+
+  
+  /**
+   * Get the current execution path.
+   */
+   private static String GetExecutionPath(){
+    String absolutePath = (HepSim.class).getProtectionDomain().getCodeSource().getLocation().getPath();
+    absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));
+    absolutePath = absolutePath.replaceAll("%20"," "); // Surely need to do this here
+    return absolutePath;
+    }
+
+
+         /**
+         * Determin available mirrors to read the database.
+         */
+        static public void Init(){
+
+        String inifile=GetExecutionPath()+File.separator+"mirrors.conf";
+
+        try {
+ 
+        FileInputStream fstream = new FileInputStream(inifile);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+        String strLine;
+        //Read File Line By Line
+         while ((strLine = br.readLine()) != null)   {
+             String xline=strLine.trim();
+             if (xline.length()<2)     continue;
+             if(xline.startsWith("#")) continue; 
+             mirrors.add(xline);
+         }
+         br.close();
+        } catch (IOException e) {
+                         mirrors.add(hepsim_www);
+                         System.out.println("# No file mirrors.conf file. Use default="+hepsim_www); 
+			// e.printStackTrace();
+		}
+
+
+        if (mirrors.size()>0) {
+        // ping servers, take only server that respond
+        for (int j=0; j<mirrors.size(); j++){
+            boolean response=ping((String)mirrors.get(j),30);
+            // System.out.println((String)mirrors.get(j)+" "+Boolean.toString(response));
+            if (response){
+                  hepsim_www=(String)mirrors.get(j);
+                  System.out.println("# Available server: "+hepsim_www); 
+                  break;
+             } 
+
+        }
+       }
+
+
+
+        }
 
 	/**
 	 * Open a file to write/read objects to/from a file in sequential order. If
@@ -106,7 +213,11 @@ public static final String ANSI_WHITE = "\u001B[37m";
 		String [] res = files.split("\n");
 		ArrayList<ArrayList<String>> listOfLists = new ArrayList<ArrayList<String>>();
 		for (int j=0; j<res.length; j++) {
-			String[] xfiles = res[j].split("\\s+");
+                        String xline=res[j].trim();
+                        if (xline.length()<2)     continue; 
+                        if (xline.startsWith("#")) continue; 
+
+			String[] xfiles = xline.split("\\s+");
 
 			if (xfiles.length <2) continue;
 			String sfile=xfiles[1].trim();
@@ -118,7 +229,8 @@ public static final String ANSI_WHITE = "\u001B[37m";
 			listOfLists.add(out);
 		}
 
-		Collections.sort(listOfLists,new ColumnComparator());
+                // already sorted on the server site
+		// Collections.sort(listOfLists,new ColumnComparator());
 
 		return listOfLists;
 
@@ -256,7 +368,7 @@ public static final String ANSI_WHITE = "\u001B[37m";
 				String sname = zipEntry.getName();
 				if (sname.equals(key)) {
 					tmp= getTextFromScanner(zin);
-					tmp=tmp.replace("./","");
+					// tmp=tmp.replace("./","");
 				}
 
 				zin.closeEntry();
@@ -341,6 +453,8 @@ public static final String ANSI_WHITE = "\u001B[37m";
                 // apply redirection, if info page is used 
                 // this finds based on info page
 
+                Init();
+
                 int smart=0;
                 if (surl.indexOf("info.php?")>-1) {
                    surl=surl.replace("info.php?","geturl.php?");
@@ -349,7 +463,27 @@ public static final String ANSI_WHITE = "\u001B[37m";
 
                  // based on names of the dataset 
                  if (surl.indexOf("tev")>-1 && surl.indexOf("http")<0) {
-                   surl="http://atlaswww.hep.anl.gov/hepsim/geturl.php?name="+surl;
+                   surl=hepsim_www+"/geturl.php?name="+surl;
+                   smart=2;
+                 }
+
+                 if (surl.indexOf("gev")>-1 && surl.indexOf("http")<0) {
+                   surl=hepsim_www+"/geturl.php?name="+surl;
+                   smart=2;
+                 }
+
+                 if (surl.indexOf("jgun")>-1 && surl.indexOf("http")<0) {
+                   surl=hepsim_www+"/geturl.php?name="+surl;
+                   smart=2;
+                 }
+
+                 if (surl.indexOf("pgun")>-1 && surl.indexOf("http")<0) {
+                   surl=hepsim_www+"/geturl.php?name="+surl;
+                   smart=2;
+                 }
+
+                  if (surl.indexOf("mev")>-1 && surl.indexOf("http")<0) {
+                   surl=hepsim_www+"/geturl.php?name="+surl;
                    smart=2;
                  }
 

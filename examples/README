@@ -9,6 +9,9 @@ Examples:
  stdhep2promc - shows how to convvert stdhep to ProMC
  python       - simple Python reader
  pythia       - shows how to make ProMC file from PYTHIA
+ promc2hepevt  - ProMC to HepEvt converter
+ promc2stdhep  - ProMC to StdHep convertor
+ promc2stdhep_java  - ProMC to StdHep convertor (Java)
 
 
 

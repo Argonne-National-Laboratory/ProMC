@@ -1,3 +1,12 @@
 Test it as:
 java -cp browser_promc.jar hepsim.HepSim http://mc.hep.anl.gov/asc/hepsim/events/pp/100tev/higgs_ttbar_mg5/
 
+# list files
+java -cp browser_promc.jar  hepsim.Ls tev100_ttbar_mg5%rfast001
+(or) 
+java -cp browser_promc.jar  hepsim.Ls http://mc.hep.anl.gov/asc/hepsim/events/pp/100tev/ttbar_mg5
+ 
+
+# get files
+java -cp browser_promc.jar  hepsim.Get tev100_ttbar_mg5%rfast001
+java -cp browser_promc.jar  hepsim.Get http://mc.hep.anl.gov/asc/hepsim/events/pp/100tev/ttbar_mg5

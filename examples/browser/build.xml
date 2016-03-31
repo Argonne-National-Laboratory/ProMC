@@ -115,8 +115,10 @@
  <delete file="${lib.dir}/promc-protobuf.jar"/>
  <delete dir="${build.dir}"/>
  <delete dir="dist"/>
- 
+
+  <!-- 
   <copy file="browser_promc.jar" tofile="hepsim.jar"/>
+  -->
 
  </target>
 
@@ -161,8 +163,7 @@
            source="${build.sourceversion}" 
            overview="doc/symbols.html"
            link="http://download.oracle.com/javase/6/docs/api/"
-           windowtitle="jHepWork-${build.version} API - jHPlot" classpathref="classpath">
-
+           windowtitle="ProMC-${build.version} API - jHPlot" classpathref="classpath">
 <!--
      <classpath>
         <pathelement path="${java.class.path}/"/>
@@ -170,15 +171,13 @@
 -->
 
     <packageset dir="${src.dir}" >
-      <include name="jhplot/**" />
-      <include name="carmetal/objects/**" />
-      <exclude name="jhplot/gui/**" />
+      <include name="*/**" />
     </packageset>
 
 
 
-    <bottom><![CDATA[<i>&copy; Copyright 2005-2011 S.Chekanov. All Rights Reserved.
-      <br>jHPlot package, a part of <a href="http://jwork.org/jhepwork/">jHepWork</a>:  is a full-featured multiplatform data-analysis framework</i>]]></bottom>
+    <bottom><![CDATA[<i>&copy; Copyright 2005-2015 S.Chekanov. ProMC data format. HepSim repository.
+      ]]></bottom>
   </javadoc>
 </target>
 

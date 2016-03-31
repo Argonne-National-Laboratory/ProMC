@@ -46,6 +46,7 @@ public class MainGui {
 	private JTable table;
 	private Map<Integer, Double> mass_map = new HashMap<Integer, Double>();
 	private Map<Integer, String> name_map = new HashMap<Integer, String>();
+        private Map<Integer, Integer> charge_map = new HashMap<Integer, Integer>();
 	private MyTableModelInfo model;
 	private int unit, lunit;
 	private JLabel statusBar;
@@ -267,8 +268,10 @@ public class MainGui {
 			int pid = d.getId();
 			double mass = d.getMass();
 			String name = d.getName();
+                        int charge = d.getCharge();
 			mass_map.put(new Integer(pid), mass);
 			name_map.put(new Integer(pid), name);
+                        charge_map.put(new Integer(pid), charge);
 		}
 
 
@@ -739,15 +742,22 @@ public class MainGui {
 			model.addColumn("PID");
 			model.addColumn("Name");
 			model.addColumn("Mass (GeV)");
+                        model.addColumn("Charge");
+                        model.addColumn("Lifetime");
+
+                        if (header != null) {
 			for (int j = 0; j < header.getParticleDataCount(); j++) {
 				promc.io.ProMCHeaderFile.ProMCHeader.ParticleData d = header
 						.getParticleData(j);
 				String name = d.getName();
+                                int charge=d.getCharge();
 				model.addRow(new Object[] { new Integer(j + 1),
 						new Integer(d.getId()), new String(name),
-						new Double(d.getMass()) });
+						new Double(d.getMass()), new Integer(charge), new Double(d.getLifetime()) });
 			}
 			table.setModel(model);
+                        }
+
 
 		}
 	}
