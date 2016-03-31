@@ -1,0 +1,18 @@
+# Simple conversion from LHEF (1) to PROMC
+
+xsec=100
+xsec_error=1
+describe="ALPJEN converted file"
+events=1473
+XNAME="4b"
+finput=$XNAME".lhe"
+foutput=$XNAME".promc"
+
+echo $describe
+echo "events=$events"
+echo "cross-section (pb)=$xsec" 
+echo "error in (pb)=$xsec_error"
+
+./lhe2promc  $finput $foutput "$describe" $events $xsec $xsec_error 
+echo "Start browser to view events"
+promc_browser $foutput

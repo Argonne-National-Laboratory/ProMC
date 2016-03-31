@@ -1,0 +1,22 @@
+
+Description
+===========
+
+Create a file with 2 single particles ("particle gun")
+The distribution of particles is flat in energy up to  E(max), in GeV. 
+Particles are uniformly distributed in phi and angle
+S.Chekanov (ANL)
+
+Setup:
+======
+source setup.sh
+javac promc_gun.java 
+
+Usage: java promc_gun pions.promc 100 211 1000
+
+This means:
+
+E=100        # max energy 100 GeV
+ID=211       # pi+ or use and PDG ID
+EVENTS=1000  # Nr of generated events with 1 particle
+

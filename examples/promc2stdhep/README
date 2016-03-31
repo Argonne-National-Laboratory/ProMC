@@ -1,0 +1,18 @@
+PROMC to StdHep converter.
+-----------------------
+
+1) Get an example file:
+   wget http://atlaswww.hep.anl.gov/asc/promc/download/Pythia8.promc
+
+2) Setup ROOT and compile: "make"
+
+3) Create ROOT file:
+   ./promc2stdhep Pythia8.promc Pythia8.stdhep 
+
+General syntax:
+
+./promc2stdhep <file.promc> <file.stdhep>
+
+
+S.Chekanov (ANL)
+March 2014

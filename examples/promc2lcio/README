@@ -1,0 +1,9 @@
+Convertor: ProMC to LCIO
+S.Chekanov (ANL)
+----------------------
+source setup.sh
+javac promc2lcio.java
+
+Usage:
+java promc2lcio file.promc file.slcio
+

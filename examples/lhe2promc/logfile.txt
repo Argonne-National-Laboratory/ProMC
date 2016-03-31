@@ -1,0 +1,3 @@
+Please put a log file or any importnat info in this file, 
+so living people in 20 years from now will know what is inside!
+The file logfile.txt should be in the same directory where you run your convertor 

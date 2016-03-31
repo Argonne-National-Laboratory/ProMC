@@ -1,0 +1,10 @@
+Convertor: ProMC to StdHep
+S.Chekanov (ANL)
+----------------------
+
+source setup.sh
+javac promc2stdhep.java
+
+Usage:
+java promc2stdhep file.promc file.stdhep
+
