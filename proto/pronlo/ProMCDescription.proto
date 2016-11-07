@@ -14,6 +14,6 @@ message ProMCDescription {
     required uint64  version=1;           // ProMC version 
     required uint64  events=2;            // number of events 
     required string  description=3;       // description 
-    required uint64  timestamp=4;         //  timestamp seince 1970 
+    required uint64  timestamp=4;         //  timestamp since 1970 
 }
 

@@ -155,7 +155,7 @@ public static boolean ping(String surl, int timeout) {
             // System.out.println((String)mirrors.get(j)+" "+Boolean.toString(response));
             if (response){
                   hepsim_www=(String)mirrors.get(j);
-                  System.out.println("# Available server: "+hepsim_www); 
+                  System.out.println("HepSim server: "+hepsim_www); 
                   break;
              } 
 
@@ -442,9 +442,9 @@ public static boolean ping(String surl, int timeout) {
          * Smart URL redirector.
          * 
          * @param surl URL of info page, or dataset name 
-         * @return final download URL  
+         * @return list of final download URL. First URL is the main one.  
          */
-        static public String urlRedirector(String surl){
+        static public String[] urlRedirector(String surl){
 
                 // identify URL links using the search
                 // http://atlaswww.hep.anl.gov/hepsim/geturl.php?name=higgs_ttbar_mg5
@@ -454,6 +454,13 @@ public static boolean ping(String surl, int timeout) {
                 // this finds based on info page
 
                 Init();
+                //System.out.println("Call urlRedirector="+surl);
+
+                // if this is HTTP, just get the main
+                 if (surl.indexOf("http:")>-1 && surl.indexOf("info.php?")<0) {
+                    //System.out.println("Direct call to "+surl);
+                    return new String[]{surl};
+                 }
 
                 int smart=0;
                 if (surl.indexOf("info.php?")>-1) {
@@ -462,30 +469,11 @@ public static boolean ping(String surl, int timeout) {
                  }
 
                  // based on names of the dataset 
-                 if (surl.indexOf("tev")>-1 && surl.indexOf("http")<0) {
-                   surl=hepsim_www+"/geturl.php?name="+surl;
+                 if (surl.indexOf("http")<0 && surl.indexOf("info.php?")<0) {
+                   surl=hepsim_www+"/geturlmirrors.php?name="+surl;
                    smart=2;
                  }
 
-                 if (surl.indexOf("gev")>-1 && surl.indexOf("http")<0) {
-                   surl=hepsim_www+"/geturl.php?name="+surl;
-                   smart=2;
-                 }
-
-                 if (surl.indexOf("jgun")>-1 && surl.indexOf("http")<0) {
-                   surl=hepsim_www+"/geturl.php?name="+surl;
-                   smart=2;
-                 }
-
-                 if (surl.indexOf("pgun")>-1 && surl.indexOf("http")<0) {
-                   surl=hepsim_www+"/geturl.php?name="+surl;
-                   smart=2;
-                 }
-
-                  if (surl.indexOf("mev")>-1 && surl.indexOf("http")<0) {
-                   surl=hepsim_www+"/geturl.php?name="+surl;
-                   smart=2;
-                 }
 
                 // fetch correct URL based on how smart you are
                 if (smart>0) {
@@ -502,27 +490,30 @@ public static boolean ping(String surl, int timeout) {
                     NEWURL=NEWURL.trim();
                     NEWURL=NEWURL.replace("\n","");
                     surl=NEWURL;
-                    if (surl.length()<5) {
+                    String[] parts =  surl.split(";");
+                    if (parts.length==0) return null;
+
+                    if (parts.length==0) {
                       if (smart==2) ErrorMessage("Name of the dataset was not found.");
                       if (smart==1) ErrorMessage("URL to the Info page cannot find the dataset.");
-                      return ""; 
+                      return null; 
                     } 
-
+                    return parts;
                 }
                 catch (MalformedURLException e) {
                     ErrorMessage("Connection problem with the HepSim repository."); 
                     System.out.println("MalformedURLException: "+e.getMessage());
-                    return ""; 
+                    return null; 
 
                 }
                 catch (IOException e) {
                     ErrorMessage("Connection problem with the HepSim repository.");   
                     System.out.println("I/O Error: " + e.getMessage());
-                    return ""; 
+                    return null; 
                 }
                 }
 
-                return surl;
+                return  null;
 
         }
 

@@ -34,7 +34,7 @@ message ProMCHeader {
     optional double requested_events=21;  // total number of requested events 
 
 
-   // map to store particle data (names, masse)
+   // map to store particle data (names, mass)
    message ParticleData {
          required sint32 id    =1;     // PID of particle
          required double mass  =2;     // its mass
@@ -47,13 +47,13 @@ message ProMCHeader {
 
   // map to store orbitrary data as key-int value 
    message MetaInt {
-         required string key = 1;        // key for interger value 
+         required string key = 1;        // key for integer value 
          required sint64 value = 2;      // value 
    }
 
   // map to store orbitrary data as key-int value 
    message MetaFloat {
-         required string key = 1;        // key for interger value
+         required string key = 1;        // key for integer value
          required double value = 2;      // value
    }
 

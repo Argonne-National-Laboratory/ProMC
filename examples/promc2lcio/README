@@ -1,9 +1,23 @@
 Convertor: ProMC to LCIO
 S.Chekanov (ANL)
+Joel Zuzelski (ANL, SULI2016)
+
 ----------------------
 source setup.sh
+
+# compile converter
 javac promc2lcio.java
+
+# compile SLCIO viewer
+javac LCTExpanded.java 
 
 Usage:
 java promc2lcio file.promc file.slcio
 
+# print event 40
+java LCTExpanded file.slcio 40
+
+Full example:
+wget http://mc.hep.anl.gov/asc/hepsim/events/pp/100tev/higgs_ttbar_mg5/mg5_Httbar_100tev_001.promc
+java promc2lcio mg5_Httbar_100tev_001.promc mg5_Httbar_100tev_001.slcio
+java LCTExpanded mg5_Httbar_100tev_001.slcio 10 # print event 10 

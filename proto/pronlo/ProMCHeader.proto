@@ -47,13 +47,13 @@ message ProMCHeader {
 
   // map to store orbitrary data as key-int value 
    message MetaInt {
-         required string key = 1;        // key for interger value 
+         required string key = 1;        // key for integer value 
          required sint64 value = 2;      // value 
    }
 
   // map to store orbitrary data as key-int value 
    message MetaFloat {
-         required string key = 1;        // key for interger value
+         required string key = 1;        // key for integer value
          required double value = 2;      // value
    }
 

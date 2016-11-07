@@ -57,8 +57,18 @@ public class Ls {
                       System.exit(1);
                   }
 
+                String[] surl_array=HepSim.urlRedirector(surl);
+                if (surl_array != null) {
+                 surl=surl_array[0];
+                 if (surl_array.length>1){
+                 System.out.println(HepSim.ANSI_BLUE+"Available mirrors:"+HepSim.ANSI_RESET);
+                                for (int j=0; j<surl_array.length; j++){
+                                        System.err.print(HepSim.ANSI_BLUE+"["+Integer.toString(j)+"]"+HepSim.ANSI_RESET);
+                                        System.out.println("  "+surl_array[j]);
+                                }
+                  }
+                 } // end not null
 
-                surl=HepSim.urlRedirector(surl);
 
                 // simple listing of files without decoration
                 if (args.length==2){
@@ -90,9 +100,8 @@ public class Ls {
                         System.exit(0);
                 };
 
-                       if (simple_list==false) {
-
-                        System.out.println("HepSim: "+surl);
+                    if (simple_list==false) {
+                        System.out.println("URL: "+surl);
                         System.out.format("%7s%42s%13s\n","Nr", "File name","     bytes");
                         int nlinse=7+42+13;
                         for (int j=0; j<nlinse; j++) System.out.print("-");

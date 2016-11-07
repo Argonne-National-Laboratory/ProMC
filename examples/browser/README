@@ -9,4 +9,5 @@ java -cp browser_promc.jar  hepsim.Ls http://mc.hep.anl.gov/asc/hepsim/events/pp
 
 # get files
 java -cp browser_promc.jar  hepsim.Get tev100_ttbar_mg5%rfast001
+java -cp browser_promc.jar  hepsim.GetMirrors tev100_ttbar_mg5%rfast001
 java -cp browser_promc.jar  hepsim.Get http://mc.hep.anl.gov/asc/hepsim/events/pp/100tev/ttbar_mg5

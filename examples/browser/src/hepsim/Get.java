@@ -8,9 +8,9 @@ import java.text.*;
 import java.nio.file.*;
 
 
-
 /**
-Downloading ProMC files in multiple threads from the HepSim library
+Downloading ProMC files in multiple threads from the primary HepSim library.
+Use GetMirrors to check the mirrors.
 
 @author S.Chekanov (ANL)
 
@@ -149,8 +149,10 @@ private static String toDir="";
                       System.exit(1);
                   }
 
-                surl=HepSim.urlRedirector(surl);
+                String[] surl_array=HepSim.urlRedirector(surl);
+                surl=surl_array[0];
                 //System.out.println(surl);
+                if (surl_array != null) surl=surl_array[0];
 
                 // create reconstructed-level URL
                 if (parts.length==2){
