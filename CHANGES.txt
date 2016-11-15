@@ -1,4 +1,8 @@
-ProMC 1.5. Update 2015 (May)
+ProMC 1.5.2 Update 2016 (Oct)
+  install script makes shared library $PROMC/lib/libpromc.so (Alexander Kiselev)
+  Java GUI viewer is updated to be able to read mirrors 
+
+ProMC 1.5.1 Update 2015 (May)
   Pileup mixer implemented in the Java browser jar file (Daniel Wilbern)
   A tool to extract N events 
 

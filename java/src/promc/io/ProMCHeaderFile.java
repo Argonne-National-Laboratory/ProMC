@@ -903,7 +903,7 @@ public final class ProMCHeaderFile {
      * Protobuf type {@code promc.ProMCHeader.ParticleData}
      *
      * <pre>
-     * map to store particle data (names, masse)
+     * map to store particle data (names, mass)
      * </pre>
      */
     public static final class ParticleData extends
@@ -1364,7 +1364,7 @@ public final class ProMCHeaderFile {
        * Protobuf type {@code promc.ProMCHeader.ParticleData}
        *
        * <pre>
-       * map to store particle data (names, masse)
+       * map to store particle data (names, mass)
        * </pre>
        */
       public static final class Builder extends
@@ -1903,7 +1903,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value 
+       * key for integer value 
        * </pre>
        */
       boolean hasKey();
@@ -1911,7 +1911,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value 
+       * key for integer value 
        * </pre>
        */
       java.lang.String getKey();
@@ -1919,7 +1919,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value 
+       * key for integer value 
        * </pre>
        */
       com.google.protobuf.ByteString
@@ -2055,7 +2055,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value 
+       * key for integer value 
        * </pre>
        */
       public boolean hasKey() {
@@ -2065,7 +2065,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value 
+       * key for integer value 
        * </pre>
        */
       public java.lang.String getKey() {
@@ -2086,7 +2086,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value 
+       * key for integer value 
        * </pre>
        */
       public com.google.protobuf.ByteString
@@ -2399,7 +2399,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value 
+         * key for integer value 
          * </pre>
          */
         public boolean hasKey() {
@@ -2409,7 +2409,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value 
+         * key for integer value 
          * </pre>
          */
         public java.lang.String getKey() {
@@ -2427,7 +2427,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value 
+         * key for integer value 
          * </pre>
          */
         public com.google.protobuf.ByteString
@@ -2447,7 +2447,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value 
+         * key for integer value 
          * </pre>
          */
         public Builder setKey(
@@ -2464,7 +2464,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value 
+         * key for integer value 
          * </pre>
          */
         public Builder clearKey() {
@@ -2477,7 +2477,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value 
+         * key for integer value 
          * </pre>
          */
         public Builder setKeyBytes(
@@ -2559,7 +2559,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value
+       * key for integer value
        * </pre>
        */
       boolean hasKey();
@@ -2567,7 +2567,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value
+       * key for integer value
        * </pre>
        */
       java.lang.String getKey();
@@ -2575,7 +2575,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value
+       * key for integer value
        * </pre>
        */
       com.google.protobuf.ByteString
@@ -2711,7 +2711,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value
+       * key for integer value
        * </pre>
        */
       public boolean hasKey() {
@@ -2721,7 +2721,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value
+       * key for integer value
        * </pre>
        */
       public java.lang.String getKey() {
@@ -2742,7 +2742,7 @@ public final class ProMCHeaderFile {
        * <code>required string key = 1;</code>
        *
        * <pre>
-       * key for interger value
+       * key for integer value
        * </pre>
        */
       public com.google.protobuf.ByteString
@@ -3055,7 +3055,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value
+         * key for integer value
          * </pre>
          */
         public boolean hasKey() {
@@ -3065,7 +3065,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value
+         * key for integer value
          * </pre>
          */
         public java.lang.String getKey() {
@@ -3083,7 +3083,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value
+         * key for integer value
          * </pre>
          */
         public com.google.protobuf.ByteString
@@ -3103,7 +3103,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value
+         * key for integer value
          * </pre>
          */
         public Builder setKey(
@@ -3120,7 +3120,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value
+         * key for integer value
          * </pre>
          */
         public Builder clearKey() {
@@ -3133,7 +3133,7 @@ public final class ProMCHeaderFile {
          * <code>required string key = 1;</code>
          *
          * <pre>
-         * key for interger value
+         * key for integer value
          * </pre>
          */
         public Builder setKeyBytes(

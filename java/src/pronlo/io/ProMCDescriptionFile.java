@@ -79,7 +79,7 @@ public final class ProMCDescriptionFile {
      * <code>required uint64 timestamp = 4;</code>
      *
      * <pre>
-     *  timestamp seince 1970 
+     *  timestamp since 1970 
      * </pre>
      */
     boolean hasTimestamp();
@@ -87,7 +87,7 @@ public final class ProMCDescriptionFile {
      * <code>required uint64 timestamp = 4;</code>
      *
      * <pre>
-     *  timestamp seince 1970 
+     *  timestamp since 1970 
      * </pre>
      */
     long getTimestamp();
@@ -313,7 +313,7 @@ public final class ProMCDescriptionFile {
      * <code>required uint64 timestamp = 4;</code>
      *
      * <pre>
-     *  timestamp seince 1970 
+     *  timestamp since 1970 
      * </pre>
      */
     public boolean hasTimestamp() {
@@ -323,7 +323,7 @@ public final class ProMCDescriptionFile {
      * <code>required uint64 timestamp = 4;</code>
      *
      * <pre>
-     *  timestamp seince 1970 
+     *  timestamp since 1970 
      * </pre>
      */
     public long getTimestamp() {
@@ -844,7 +844,7 @@ public final class ProMCDescriptionFile {
        * <code>required uint64 timestamp = 4;</code>
        *
        * <pre>
-       *  timestamp seince 1970 
+       *  timestamp since 1970 
        * </pre>
        */
       public boolean hasTimestamp() {
@@ -854,7 +854,7 @@ public final class ProMCDescriptionFile {
        * <code>required uint64 timestamp = 4;</code>
        *
        * <pre>
-       *  timestamp seince 1970 
+       *  timestamp since 1970 
        * </pre>
        */
       public long getTimestamp() {
@@ -864,7 +864,7 @@ public final class ProMCDescriptionFile {
        * <code>required uint64 timestamp = 4;</code>
        *
        * <pre>
-       *  timestamp seince 1970 
+       *  timestamp since 1970 
        * </pre>
        */
       public Builder setTimestamp(long value) {
@@ -877,7 +877,7 @@ public final class ProMCDescriptionFile {
        * <code>required uint64 timestamp = 4;</code>
        *
        * <pre>
-       *  timestamp seince 1970 
+       *  timestamp since 1970 
        * </pre>
        */
       public Builder clearTimestamp() {

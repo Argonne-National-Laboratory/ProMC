@@ -133,6 +133,10 @@ mkdir -p  ${PROJ}/python/lib/$python_dis
 
 
 cd ${CURRENT_DIR}
+echo "Making shared library  ${PROJ}/lib/libpromc.so"
+gcc -shared -Wl,-soname,libpromc.so -o ${PROJ}/lib/libpromc.so \
+    ./protobuf/src/*.o ./cbook/src/zipios/*.o ./src/promc/*.o ./cbook/libzip/lib/*.o ./cbook/src/CBook/ZIP.o
+
 rsync -ra --exclude ".svn/" share/*     ${PROJ}/
 rsync -ra --exclude ".svn/" cbook/inc/* ${PROJ}/include/
 rsync -ra --exclude ".svn/" cbook/share/include/zip.h           ${PROJ}/include/

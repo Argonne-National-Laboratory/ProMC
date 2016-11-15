@@ -1,4 +1,4 @@
-F_INCLUDEDIRS=-I/users/chakanau/work/ProMC/ProMC/share/include -I/users/chakanau/work/ProMC/ProMC/cbook/inc -I/users/chakanau/work/ProMC/ProMC/cbook/src -I/users/chakanau/work/ProMC/ProMC/cbook/inc/CBook 
+F_INCLUDEDIRS=-I/users/chekanov/work/ProMC/ProMC/share/include -I/users/chekanov/work/ProMC/ProMC/cbook/inc -I/users/chekanov/work/ProMC/ProMC/cbook/src -I/users/chekanov/work/ProMC/ProMC/cbook/inc/CBook 
 DEBUG=
 include ../../config.mk
 
