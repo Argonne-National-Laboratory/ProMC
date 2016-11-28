@@ -1,0 +1,68 @@
+// ProMC event record for EIC.
+// See: https://atlaswww.hep.anl.gov/asc/promc/
+// This is a template for Monte Carlo event record based on variable number of bytes
+// Authors: 
+// S.Chekanov (ANL) and A.Kiselev 
+
+
+package promc;
+option java_package = "proeic.io";
+option java_outer_classname = "ProMC";
+
+message ProMCEvent {
+
+
+   // Event information
+   message Event {
+         optional int32 Number = 1;       // Number
+         optional int32 Process_ID = 2;   // ID unique signal process id
+         optional int32 MPI       = 3;    // MPI number of multi parton interactions
+         optional int32 ID1       = 4;    // ID1 flavour code of first parton
+         optional int32 ID2       = 5;    // ID2 flavour code of second parton
+         optional float PDF1      = 6;    // PDF1 PDF (id1, x1, Q)
+         optional float PDF2      = 7;    // PDF2 PDF (id2, x2, Q)
+         optional float X1        = 8;    // X1 fraction of beam momentum carried by first parton ("beam side")
+         optional float X2        = 9;    // X2 fraction of beam momentum carried by second parton ("target side")
+         optional float Scale_PDF = 10;   // Scale PDF Q-scale used in evaluation of PDF's (in GeV) |
+         optional float Alpha_QED = 11;   // AlphaQED QED coupling, see hep-ph/0109068
+         optional float Scale     = 12;   // Scale   energy scale, see hep-ph/0109068
+         optional float Alpha_QCD = 13;   // QCD coupling, see hep-ph/0109068
+         optional double Weight   = 14;   // event weight 
+         optional float  X        = 15;   // bjorken  x_bj for DIS 
+         optional float  Q2       = 16;   // Q2 for DIS 
+         repeated float  fdata   =  17;   // event info as you want (array, float) 
+         repeated sint64 idata   =  18;   // event info as you want (array, varint)
+   }
+
+
+  // Generator (truth) particles 
+  message Particles { 
+    repeated uint32  id=1           [packed=true]; // ID in the generator
+    repeated sint32  pdg_id=2       [packed=true]; // unique integer ID specifying the particle type 
+    repeated uint32  status=3       [packed=true]; // integer specifying the particle’s status (i.e. decayed or not) 
+    repeated float   mass=4         [packed=true]; // mass 
+    repeated float   Px=5           [packed=true]; // pX 
+    repeated float   Py=6           [packed=true]; // pY 
+    repeated float   Pz=7           [packed=true]; // pZ
+    repeated uint32  mother1=8      [packed=true]; // first mother 
+    repeated uint32  mother2=9      [packed=true]; // second mother  
+    repeated uint32  daughter1=10   [packed=true]; // first daughter 
+    repeated uint32  daughter2=11   [packed=true]; // second daughter 
+    repeated sint32  barcode=12     [packed=true]; // barcode if used 
+    repeated float   X=13           [packed=true]; // vertex X position 
+    repeated float   Y=14           [packed=true]; // vertex Y position  
+    repeated float   Z=15           [packed=true]; // vertex Z position 
+    repeated float   T=16           [packed=true]; // time 
+    repeated float   weight=17      [packed=true]; // particle weight 
+    repeated sint32  charge=18      [packed=true]; // Charge
+    repeated float   energy=19      [packed=true]; // Energy
+   }
+
+
+     // even record for this event
+     optional Event        event = 1;            // information on event
+     optional Particles    particles = 2;        // information on generator-level particles 
+ 
+ 
+}
+

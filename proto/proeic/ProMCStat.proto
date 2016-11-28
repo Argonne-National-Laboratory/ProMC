@@ -1,0 +1,49 @@
+// ProMC statistics record for EIC.
+// See: https://atlaswww.hep.anl.gov/asc/promc/
+// This is a template for Monte Carlo event record based on variable number of bytes
+// Authors: 
+// S.Chekanov (ANL) and A.Kisele
+
+
+package promc;
+option java_package = "proeic.io";
+option java_outer_classname = "ProMCStatFile";
+
+message ProMCStat {
+
+    optional int32   nevents_requested=1;   // events requested 
+    optional int32   nevents_failed=2;      // events failed
+    optional double  cross_section_accumulated=3;       //  cross section in pb (accumulated after all events) 
+    optional double  cross_section_error_accumulated=4; //  error associated with this cross section in pb
+    optional double  luminosity_accumulated=5;          //  accumulated luminosity in pb
+    optional int32   nTried=6;                           // tried events
+    optional int32   nSelected=7;                        // selected events
+    optional int32   nAccepted=8;                        // accepted events
+
+  // store generated processes 
+   message ProcessData {
+         required sint32 id = 1;                        // process ID 
+         required double cross_section = 2;             // process cross section (in pb) 
+         required double cross_section_error = 3;       // error on cross section 
+         required string name = 4;                      // name of the process  
+   }
+
+  // map to store orbitrary data as key-int value 
+   message MetaInt {
+         required string key = 1;        // key for integer value 
+         required sint64 value = 2;      // value 
+   }
+
+  // map to store orbitrary data as key-int value 
+   message MetaFloat {
+         required string key = 1;        // key for integer value
+         required double value = 2;      // value
+   }
+
+  repeated ProcessData processData = 10;
+  repeated MetaInt      metaInt = 11;       // keep metadata as key-value (int) 
+  repeated MetaFloat    metaFloat = 12;     // keep metadata as key-value (double)
+
+
+}
+

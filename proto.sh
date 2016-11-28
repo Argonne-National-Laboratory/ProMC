@@ -40,6 +40,13 @@ $protocxx --cpp_out=src/pronlo   $PRFILE.proto # for release 1.5
 $protocxx --python_out=src/pronlo $PRFILE.proto # for release 1.5
 rm -f $PRFILE.proto
 
+echo "ProNLO: $PRFILE file for EIC data"
+ln -s proto/proeic/$PRFILE.proto .
+$protocxx --java_out=java/src     $PRFILE.proto
+$protocxx --cpp_out=src/proeic    $PRFILE.proto  # for release 1.6 
+$protocxx --python_out=src/proeic $PRFILE.proto # for release 1.6 
+rm -f $PRFILE.proto
+
 echo "ProReco: $PRFILE file for Reconstructed data"
 ln -s proto/proreco/$PRFILE.proto .
 $protocxx --java_out=java/src    $PRFILE.proto
@@ -60,13 +67,20 @@ $protocxx --python_out=src/promc  $PRFILE.proto
 cp -f src/*.h inc/
 rm -f $PRFILE.proto
 
-
 echo "ProNLO: $PRFILE for NLO data"
 ln -s proto/pronlo/$PRFILE.proto .
 $protocxx --java_out=java/src    $PRFILE.proto
 $protocxx --cpp_out=src/pronlo   $PRFILE.proto # for release 1.5
 $protocxx --python_out=src/pronlo $PRFILE.proto # for release 1.5
 rm -f $PRFILE.proto
+
+echo "ProEIC: $PRFILE for EIC data"
+ln -s proto/proeic/$PRFILE.proto .
+$protocxx --java_out=java/src     $PRFILE.proto
+$protocxx --cpp_out=src/proeic    $PRFILE.proto  # for release 1.6
+$protocxx --python_out=src/proeic $PRFILE.proto # for release 1.6
+rm -f $PRFILE.proto
+
 
 echo "ProReco: $PRFILE for Reco data"
 ln -s proto/proreco/$PRFILE.proto .
@@ -97,6 +111,14 @@ $protocxx --python_out=src/pronlo $PRFILE.proto
 rm -f $PRFILE.proto
 
 
+echo "ProEIC: $PRFILE for EIC data"
+ln -s proto/proeic/$PRFILE.proto .
+$protocxx --java_out=java/src    $PRFILE.proto
+$protocxx --cpp_out=src/proeic   $PRFILE.proto # for release 1.5
+$protocxx --python_out=src/proeic $PRFILE.proto
+rm -f $PRFILE.proto
+
+
 echo "ProNLO: $PRFILE for Reco data"
 ln -s proto/proreco/$PRFILE.proto .
 $protocxx --java_out=java/src    $PRFILE.proto
@@ -124,13 +146,19 @@ $protocxx --java_out=java/src    $PRFILE.proto
 $protocxx --python_out=src/pronlo $PRFILE.proto
 rm -f $PRFILE.proto
 
+echo "ProEIC: $PRFILE for EIC data"
+ln -s proto/proeic/$PRFILE.proto .
+$protocxx --cpp_out=src/proeic    $PRFILE.proto # for release 1.6 
+$protocxx --java_out=java/src     $PRFILE.proto
+$protocxx --python_out=src/pronlo $PRFILE.proto
+rm -f $PRFILE.proto
+
 echo "ProNLO: $PRFILE for Reco data"
 ln -s proto/proreco/$PRFILE.proto .
 $protocxx --java_out=java/src    $PRFILE.proto
 $protocxx --cpp_out=src/proreco  $PRFILE.proto # for release 1.5
 $protocxx --python_out=src/proreco $PRFILE.proto
 rm -f $PRFILE.proto
-
 
 
 echo "#### AUX functions ####"
@@ -161,6 +189,7 @@ cp -f proto/ProMCBook.* src/
 cp -f proto/ProMCBook.* src/promc/
 cp -f proto/ProMCBook.* src/proreco/
 cp -f proto/ProMCBook.* src/pronlo/
+cp -f preic/ProMCBook.* src/proeic/
 
 PROMC_LIB="-L./share/lib -lprotoc -lprotobuf -lprotobuf-lite -lcbook -lz"
 INCLUD1=-I./share/include
@@ -202,6 +231,23 @@ else
     chmod 755 $AR_LIB
     echo "$AR_LIB was build"
 fi 
+
+echo "--> Build ProEIC library.."
+AR_LIB=share/lib/libproeic.a
+XDIR=./src/proeic
+for f in $XDIR/*.cc
+do
+  echo "Compiling $f.."
+  obj=${f%.cc}.o
+  $CXX $CPP_FLAGS -c $f -o  $obj $INCLUD1 $INCLUD2 $INCLUD3 $INCLUD4
+  $AR rcs $AR_LIB $obj
+done
+if [ ! -e "$AR_LIB" ]; then
+    echo "Error! File $AR_LIB does not exist!!!"
+else
+    chmod 755 $AR_LIB
+    echo "$AR_LIB was build"
+fi
 
 
 echo "--> Build ProReco library.."
