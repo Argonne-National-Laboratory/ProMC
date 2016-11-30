@@ -1,0 +1,7 @@
+from distutils.core import setup
+
+setup(name='ProMC',
+      version='${PACKAGE_VERSION}',
+      package_dir={ 'ProMC': '${CMAKE_CURRENT_BINARY_DIR}' },
+      packages=['ProMC'])
+
