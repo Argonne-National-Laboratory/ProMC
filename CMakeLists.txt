@@ -3,8 +3,11 @@ CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
 
-
 SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11")
+
+set(PROMC_BUILD_PROMC   ON CACHE BOOL "Build the Default PROMC data model") 
+set(PROMC_BUILD_EIC     OFF CACHE BOOL "Build the EIC data model") 
+set(PROMC_BUILD_NLO     ON  CACHE BOOL "Build the NLO data model") 
 
 set(ProMC_MAJOR_VERSION 1)
 set(ProMC_MINOR_VERSION 6)

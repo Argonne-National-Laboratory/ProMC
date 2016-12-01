@@ -38,25 +38,10 @@
 #include "zipios++/zipinputstream.h"
 
 
-using namespace promc;
-using namespace std;
-using namespace zipios;
-
-using std::cerr ;
-using std::cout ;
-using std::endl ;
-using std::ios ;
-using std::string ;
-using std::exception ;
-using std::istream;
-using std::ofstream;
-using std::ifstream;
-using std::setw;
-
+namespace @PROMC_LIBNAME@ {
 
 class ProMCBook{
 public:
-
 
      /**
      * Main constructor.
@@ -140,14 +125,14 @@ file will be written at the end (after "close()" call). This mode supports files
      * Get the description string. 
      * @return description.  
      **/
-     string getDescription() { return description; };
+     std::string getDescription() { return description; };
 
      /**
      * Set the description of the ProMc file. 
      * @param[events] expected number of events to store.
      * @param[s] String with a description.   
      **/
-     void setDescription(int events, string s);
+     void setDescription(int events, std::string s);
 
 
      /**
@@ -210,10 +195,10 @@ private:
                    // 2: new zip stream (less reliable)!
      int  timestamp;
      int  version;
-     string getString(char* key); // get a string from a key
-     string getStringFromStream(char* key, bool isBinary); // get a string from a key
-     int addString(string data, string key); // add a string 
-     string description; 
+     std::string getString(char* key); // get a string from a key
+     std::string getStringFromStream(char* key, bool isBinary); // get a string from a key
+     int addString(std::string data, std::string key); // add a string 
+     std::string description; 
      ProMCStat hStat;
      unsigned long nev;      // number of stored events
      unsigned long nentries; // total number of entries insize zip
@@ -226,15 +211,16 @@ private:
      int serr;
      bool terminate;
      struct zip_stat st;
-     string pfilename;
+     std::string pfilename;
      // new streaming
      ZipFileWriter* zipSream; // for streaming events to the disk 
      ZipFileReader * zipRead; // for reading
      // zipios staff (as in v1.32)
-     ZipOutputStream *outzip;
-     ZipInputStream *inpzip;
-     ZipFile *zfile;
+     zipios::ZipOutputStream *outzip;
+     zipios::ZipInputStream *inpzip;
+     zipios::ZipFile *zfile;
 
 };
 
+}
 #endif
