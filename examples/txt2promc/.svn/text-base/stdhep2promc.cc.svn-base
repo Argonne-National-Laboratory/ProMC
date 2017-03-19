@@ -1,0 +1,302 @@
+// Convert STDHEP files to ProMC format.  
+// Author: Sergei Chekanov (ANL) 
+
+
+#include <cstdlib>
+#include <string>
+#include <cassert>
+#include <iostream>
+#include <stdio.h>
+
+// STDHEP
+#include "stdhep.h"
+#include "stdlun.h"
+#include "stdcnt.h"
+#include "stdhep_mcfio.h"
+#include "hepeup.h"
+#include "heprup.h"
+#include "stdver.h"
+
+#include "ProMC.pb.h"
+#include "ProMCBook.h"
+#include "ProMCHeader.pb.h"
+
+using namespace std;
+
+
+string getEnvVar( std::string const & key ) { 
+  char * val = getenv( key.c_str() );
+  return val == NULL ? std::string("") : std::string(val);
+}
+
+
+
+//------------------------------------------------------------------------------
+void readPDG( ProMCHeader * header  ) {
+
+  string temp_string;
+  istringstream curstring;
+  
+
+  string  PdgTableFilename  = getEnvVar("PROMC")+"/data/particle.tbl";
+  if (PdgTableFilename.size()<2) {
+  cout <<"**        ERROR: PROMC variable not set. Did you run source.sh" <<
+         "      **" << endl;
+    exit(1);
+  }
+
+  ifstream fichier_a_lire(PdgTableFilename.c_str());
+  if(!fichier_a_lire.good()) {
+    cout <<"**        ERROR: PDG Table ("<< PdgTableFilename
+         <<  ") not found! exit.                        **" << endl;
+    exit(1);
+    return;
+  }
+  // first three lines of the file are useless 
+  getline(fichier_a_lire,temp_string);
+  getline(fichier_a_lire,temp_string);
+  getline(fichier_a_lire,temp_string);
+  while (getline(fichier_a_lire,temp_string)) {
+    curstring.clear(); // needed when using several times istringstream::str(string)
+    curstring.str(temp_string);
+    long int ID; std::string name; int charge; float mass; float width; float lifetime;
+ // ID name   chg       mass    total width   lifetime
+    //  1 d      -1      0.33000     0.00000   0.00000E+00
+    //  in the table, the charge is in units of e+/3
+    //  the total width is in GeV
+    //  the lifetime is ctau in mm
+    curstring >> ID >> name >> charge >> mass >> width >> lifetime;
+    ProMCHeader_ParticleData* pp= header->add_particledata();
+    pp->set_id(ID); // pi+ 
+    pp->set_mass(mass);
+    pp->set_name(name);
+    pp->set_width(width);
+    pp->set_lifetime(lifetime);
+    pp->set_charge(charge);
+    //cout << ID << " " << name << " " << mass << endl;
+  }
+
+} 
+
+
+/*
+ * A convertion of STDHEP to ProMC. During the convertion, you can set the descrription,
+ * number of events, cross section and its error. 
+ *
+ * */
+int main(int argc, char** argv) {
+
+    int ierr, i, lbl;
+    int istr = 0;
+    int nevt = 0;
+
+  // Look for a help argument
+  for (int i = 1; i < argc; ++i) {
+    const string arg = argv[i];
+    if (arg == "--help" || arg == "-h") {
+      cout << argv[0] << ": a Stdhep to ProMC converter" << endl;
+      cout << "Usage: " << argv[0] << "[<STDHEP infile> <ProMC outfile>]" << endl;
+      cout << "   or: " << argv[0] << "[<STDHEP input> <ProMC out> \"description\" \"NrEvents\" \"Cross Section (pb)\" \"Erroron Cross section (pb)\" ]" << endl;
+      cout << "\nThis program converts Stdhep file to ProMC file. \nYou can pass the description, Nr of events, cross section and it's error as arguments. \nIn this case, STDHEP internal values will not be used. - S.Chekanov - \n" << endl;
+      exit(0);
+    }
+  }
+
+  // Choose input and output files from the command line
+  string infile("-"), outfile("-"), desc("none");
+  string events("-1"),cross_section("-1"),cross_section_error("-1"); 
+  if (argc == 4) {
+    infile = argv[1];
+    outfile = argv[2];
+    desc=argv[3];
+  } else if (argc == 7) {
+    infile = argv[1];
+    outfile = argv[2];
+    desc=argv[3];
+    events=argv[4];
+    cross_section=argv[5];
+    cross_section_error=argv[6];
+  } else if (argc != 4 and argc != 7) {
+    cerr << "Usage: " << argv[0] << "[<STDHEP input> <ProMC out> \"description\"] OR" << endl;
+    cerr << "   or  " << argv[0] << "[<STDHEP input> <ProMC out> \"description\" \"NrEvents\" \"cross section (pb)\" \"Error on the cross section (pb)\" ]" << endl;
+    exit(1);
+  }
+
+    char  sinfile[230] = " ";
+    strcpy(sinfile, infile.c_str());
+    //initialize MCFio input
+    ierr = StdHepXdrReadInit(sinfile, nevt, istr);
+    if (ierr != 0) {
+        std::cout << "ERROR: problem opening input file: "
+                  << infile << std::endl;
+        return 1;
+    }
+
+   int valueNrEvents = atoi(events.c_str());  
+   double valueCrossX=atof(cross_section.c_str()); // in pb    
+   double valueCrossXerror=atof(cross_section_error.c_str()); // in pb
+
+   if (valueNrEvents>-1){
+     cout << "std2promc:  Nr of input events  is  set to: " << valueNrEvents << endl; 
+   }
+   if (valueCrossX>-1){
+     cout << "std2promc: Cross section (in pb) is  set to:  " << valueCrossX << endl;
+     cout << "std2promc: Error on cross section is set to:  " << valueCrossXerror << endl;
+   }
+
+
+
+ // -------------- ProMC file ----------------------
+ // use 0.01*MeV units
+ const double kEV=1000*100.;
+ // this is length unit. multiply CM by 1000
+ const double uL=1000.;
+
+  ProMCBook *epbook = new ProMCBook( outfile.c_str(),"w");
+  epbook->setDescription(valueNrEvents, desc);
+  ProMCHeader header;
+  // set units in 0.01*MeV for pX,pY,pZ 
+  // in reader, we will read this back
+  header.set_momentumunit((int)kEV);
+  // set length unit. In Pythia, we multiply CM by 1000 
+  header.set_lengthunit((int)uL);
+  // other info
+  header.set_id1( heprup_.idbmup[0] );
+  header.set_id2( heprup_.idbmup[1] );
+  header.set_pdf1( heprup_.pdfsup[0]);
+  header.set_pdf2( heprup_.pdfsup[1]   );
+  header.set_x1(  0  );
+  header.set_x2(  0   );
+  header.set_scalepdf( 0  );
+  header.set_weight( 0 );
+  header.set_name("STDHEP converted file");
+  header.set_code(heprup_.lprup[0]);
+  header.set_ecm(0);
+  header.set_s(0);
+  if (valueCrossX>-1 && valueCrossXerror>-1) {
+        header.set_cross_section( valueCrossX);
+        header.set_cross_section_error(valueCrossXerror);
+  } else { 
+        header.set_cross_section( heprup_.xsecup[0] );
+        header.set_cross_section_error( heprup_.xerrup[0] );
+  }
+  // let's store a map with most common masses:
+  readPDG( &header );
+  // write the header.
+  epbook->setHeader(header); // write header 
+
+/*
+   i = 0;
+   while (ierr == 0) {
+        ierr = StdHepXdrRead(&lbl,istr);
+        cout << hepevt_.nhep << " particles" <<  " Nr of blocks=" << lbl << std::endl;
+        if (i%100 ==0) cout << "# event=" << i << endl;
+
+        i++;
+    } 
+    std::cout << i << " events read" << std::endl;
+   // cleanup
+     StdHepXdrEnd(istr);
+  
+*/
+
+
+
+
+   i = 0;
+   while (ierr == 0) {
+        ierr = StdHepXdrRead(&lbl,istr);
+        if (ierr == 0) {
+           // cout << hepevt_.nhep << " particles" <<  " Nr of blocks=" << lbl << std::endl;
+           ProMCEvent promc; // create ProMC events
+
+
+           if (hepevt_.nhep <=0) continue;
+           if (hepevt_.nevhep <=0) continue;
+
+          // event info
+          ProMCEvent_Event  *eve= promc.mutable_event();
+          eve->set_number(hepevt_.nevhep);
+          eve->set_process_id(hepeup_.idprup);
+          eve->set_scale(hepeup_.scalup);
+          eve->set_alpha_qed(hepeup_.aqedup);
+          eve->set_alpha_qcd(hepeup_.aqcdup);
+          eve->set_weight(hepeup_.xwgtup);
+
+           
+       for (int k = 0; k < hepevt_.nhep; k++) {
+            int idhep=hepevt_.idhep[k]; 
+            int isthep=hepevt_.isthep[k]; 
+            int jmo1=hepevt_.jmohep[k][0];
+            int jmo2=hepevt_.jmohep[k][1];
+            int jda1=hepevt_.jdahep[k][0];
+            int jda2=hepevt_.jdahep[k][1];
+            double px=hepevt_.phep[k][0];
+            double py=hepevt_.phep[k][1];
+            double pz=hepevt_.phep[k][2];
+            // double  e=myhepevt.phep[k][3];
+            double  mass=hepevt_.phep[k][4];
+
+            double x=hepevt_.vhep[k][0];
+            double y=hepevt_.vhep[k][1];
+            double z=hepevt_.vhep[k][2];
+            double t=hepevt_.vhep[k][3];
+
+            //cout << k << " " << idhep << " " << e << endl; 
+      ProMCEvent_Particles  *par= promc.mutable_particles();
+      par->add_id( k  );
+      par->add_pdg_id(  idhep );
+      par->add_status( isthep );
+      par->add_px( int(kEV*px));
+      par->add_py( int(kEV*py));
+      par->add_pz( int(kEV*pz));
+      par->add_mass( int(kEV*mass));
+      par->add_barcode(0);
+      par->add_daughter1( jda1  );
+      par->add_daughter2( jda2  );
+      par->add_mother1( jmo1  );
+      par->add_mother2( jmo2  );
+
+      // vertex
+      par->add_x( int(uL*x ));
+      par->add_y( int(uL*y ));
+      par->add_z( int(uL*z ));
+      par->add_t( int(uL*t ));
+
+       } // end loop over particles 
+
+
+      epbook->write(promc); // write ProMC event
+      if (i%100 ==0) cout << "# event=" << i << endl;
+
+
+      i++;
+     } else {
+            std::cout << " end of file after " << i
+                      << " events" << std::endl;
+        }
+    }
+    std::cout << i << " events read" << std::endl;
+
+
+
+   // cleanup
+    StdHepXdrEnd(istr);
+
+  // save post-generation statistics for ProMC
+   ProMCStat stat;
+  // stat.set_cross_section_accumulated( sigmapb ); // in pb 
+  if (valueCrossX>-1 && valueCrossXerror>-1) {
+    stat.set_cross_section_accumulated( valueCrossX);
+    stat.set_cross_section_error_accumulated(valueCrossXerror);
+  }
+   stat.set_luminosity_accumulated(  i/valueCrossX );
+   stat.set_ntried(i);
+   stat.set_nselected(i);
+   stat.set_naccepted(i);
+   epbook->setStatistics(stat);
+ 
+   epbook->close(); // close
+
+  return EXIT_SUCCESS;
+}

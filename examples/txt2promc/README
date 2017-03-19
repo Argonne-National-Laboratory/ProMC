@@ -1,0 +1,24 @@
+# Simple conversion from txt file ee250gev.dat to PROMC
+# Run this script to get well-defined ProMC
+
+
+# cross section in pb for the events of this file
+xsec=100.0
+# error on the cross section (in pb) 
+xsec_error=1.0 
+# some description inserted to ProMC 
+describe="This sample has 250 GeV e+e- events"
+
+# how many stored events 
+events=10
+XNAME="ee250gev"
+finput=$XNAME".dat"
+foutput=$XNAME".promc"
+
+echo $describe
+echo "events=$events"
+echo "cross-section (pb)=$xsec" 
+echo "error in (pb)=$xsec_error"
+./txt2promc  $finput $foutput "$describe" $events $xsec $xsec_error 
+# echo "Start browser to view events"
+# promc_browser $foutput
