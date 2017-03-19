@@ -1,7 +1,12 @@
 # Simple conversion from LHEF (1) to PROMC
+# Run this script to create a ProMC file
 
+
+# define cross sections and errors in pb
 xsec=100
 xsec_error=1
+
+# also insert some description
 describe="ALPJEN converted file"
 events=1473
 XNAME="4b"

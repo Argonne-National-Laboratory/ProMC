@@ -180,11 +180,20 @@ public class Info {
                         String L="%10s";
                         String E="%10s";
                         System.out.println("Units: Energy in GeV,  Length in mm,  Time in sec");
-                        System.out.format("%6s%10s%6s"+ID+ID+ID+ID+ID+E+E+E+E+E+L+L+L+L+"\n","Nr","Name","PID","Stat","M1","M2","D1","D2","Px","Py","Pz","E","Mass","X","Y","Z","T"); 
+                        System.out.format("%6s%12s%6s"+ID+ID+ID+ID+ID+E+E+E+E+E+L+L+L+L+"\n","Nr","Name","PID","Stat","M1","M2","D1","D2","Px","Py","Pz","E","Mass","X","Y","Z","T"); 
              
                        int nlinse=6+10+6+5*(5)+5*(10)+4*(10);
                        for (int j=0; j<nlinse; j++) System.out.print("-");
                        System.out.print("\n"); 
+
+
+                       // check if the record starts from 0
+                       boolean start_zero=false;
+                       if (pa.getId(0)==0) start_zero=true; 
+                       // check special treatment in case of Pythia8
+                       // in case of Pythia8, generator line is at line 0 and not counted 
+                       if (pa.getPdgId(0) == 90) start_zero=false; 
+
 
                         for (int j = 0; j < pa.getPxCount(); j++) {
 
@@ -244,9 +253,8 @@ public class Info {
                                 int barcode=0;
                                 if (bM) barcode = pa.getBarcode(j);
 
-
-                                int id=0;
-                                if (idM) id = pa.getId(j);
+                                 int id = pa.getId(j);
+                                 if (start_zero) id=id+1;
 
                                  double x=0;
                                  if (xM) x = pa.getX(j) / (double) lunit;
@@ -279,9 +287,9 @@ public class Info {
                                   String sz=formatter1.format(z);
                                   String st=formatter1.format(t);
 
-                                  name = name.substring(0, Math.min(name.length(), 10));
+                                  name = name.substring(0, Math.min(name.length(), 11));
 
-                                  System.out.format("%6s%10s%6s"+ID+ID+ID+ID+ID+E+E+E+E+E+L+L+L+L+"\n",sid,name,spid,sstatus,sm1,sm2,sd1,sd2,spx,spy,spz,see,sm,sx,sy,sz,st);
+                                  System.out.format("%6s%12s%6s"+ID+ID+ID+ID+ID+E+E+E+E+E+L+L+L+L+"\n",sid,name,spid,sstatus,sm1,sm2,sd1,sd2,spx,spy,spz,see,sm,sx,sy,sz,st);
  
                                   //String txt = sid + "  "+name+"  "+spid+"  "+sstatus+"  "+sm1+"  "+sm2+"  "+sd1+"  "+sd2+"  "+spx+"  "+spy+"  "+spz+"  "+see+"  "+sm+"  "+sx+"  "+sy+"  "+sz+"  "+st;
                                   ntot++;

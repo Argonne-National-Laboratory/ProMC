@@ -1,4 +1,4 @@
-// Convert STDHEP files to ProMC format.  
+// Convert LHE files to ProMC format.  
 // Author: Sergei Chekanov (ANL) 
 
 
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
   for (int i = 1; i < argc; ++i) {
     const string arg = argv[i];
     if (arg == "--help" || arg == "-h") {
-      cout << argv[0] << ": a Stdhep to ProMC converter" << endl;
+      cout << argv[0] << ": LHE to ProMC converter" << endl;
       cout << "Usage: " << argv[0] << "[<LHEF infile> <ProMC outfile>]" << endl;
       cout << "   or: " << argv[0] << "[<LHEF input> <ProMC out> \"description\" \"NrEvents\" \"Cross Section (pb)\" \"Erroron Cross section (pb)\" ]" << endl;
       cout << "\nThis program converts LHEF file to ProMC file. \nYou can pass the description, Nr of events, cross section and it's error as arguments. \nIn this case, LHEF internal values will not be used. - S.Chekanov - \n" << endl;
@@ -245,7 +245,6 @@ int main(int argc, char** argv) {
        for (int k = 0; k < reader.hepeup.NUP; k++) {
             int idhep=reader.hepeup.IDUP[k]; 
             int isthep=reader.hepeup.ISTUP[k]; 
-
             int jmo1=reader.hepeup.MOTHUP[k].first;
             int jmo2=reader.hepeup.MOTHUP[k].second;
             int jda1=0;

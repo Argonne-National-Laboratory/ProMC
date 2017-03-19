@@ -511,9 +511,14 @@ public class MainGui {
                 if (pa.getPyCount()>1)   pyM=true;
                 if (pa.getPzCount()>1)   pzM=true;
                 if (pa.getIdCount()>1)   idM=true; 
-
                 else idM=false; 
- 
+
+ // check if the record starts from 0
+               boolean start_zero=false;
+               if (pa.getId(0)==0) start_zero=true;
+               // in case of Pythia8, generator particle at 0 always 
+               if (pa.getPdgId(0) == 90) start_zero=false;
+  
 
 		if (pa != null) {
 
@@ -577,6 +582,7 @@ public class MainGui {
 
                                 int id=0;
                                 if (idM) id = pa.getId(j); 
+                                if (start_zero) id=id+1;
 
                                  double x=0;
                                  if (xM) x = pa.getX(j) / (double) lunit;
