@@ -1,0 +1,12 @@
+#ifndef @PROTOBUF_MESSAGE_NAME@
+
+namespace @PROMC_LIBNAME@ {
+
+  namespace root {
+
+class @PROTOBUF_MESSAGE_NAME@ : public 
+
+  }
+}
+
+#define
