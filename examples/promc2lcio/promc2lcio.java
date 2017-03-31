@@ -1,7 +1,3 @@
-// Conversion of ProMC to LCIO
-// S.Chekanov, J.Zuzelski. ANL. 
-
-
 import java.io.*;
 import java.util.*;
 import static java.lang.Math.sqrt;
@@ -173,6 +169,36 @@ public class promc2lcio
 			evt.setWeight( proev.getWeight()  ) ;
 			evt.setTimeStamp(0);
 
+                        // add generator information per each event
+                         ILCGenericObject obj = new ILCGenericObject() ;
+                         double weight=proev.getWeight();
+                         double scalePDF=proev.getScalePDF();
+                         double scale=proev.getScale();      
+                         double qed=proev.getAlphaQED();      
+                         double qcd=proev.getAlphaQCD();       
+                         double pdf1=proev.getPDF1();
+                         double pdf2=proev.getPDF2();
+                         double x1=proev.getX1();
+                         double x2=proev.getX2();
+                         obj.setDoubleVal(weight,0);
+                         obj.setDoubleVal(scale,1);
+                         obj.setDoubleVal(qed,2);
+                         obj.setDoubleVal(qcd,3);
+                         obj.setDoubleVal(scalePDF,4);
+                         obj.setDoubleVal(pdf1,5);
+                         obj.setDoubleVal(pdf2,6);
+                         obj.setDoubleVal(x1,7);
+                         obj.setDoubleVal(x2,8);
+                         // process, ID
+                         obj.setIntVal(proev.getProcessID(),0);
+                         obj.setIntVal(proev.getID1(),1);
+                         obj.setIntVal(proev.getID2(),2);
+
+                        ILCCollection generic = new ILCCollection(LCIO.LCGENERICOBJECT);
+                        generic.add(obj);
+                        evt.addCollection(generic,"MCParam");
+
+
 			// create and add some mc particles
 			ILCCollection mcVec = new ILCCollection(LCIO.MCPARTICLE);
 			ILCCollection mcpcoll = convertILCIO(ss, unit, lunit);
@@ -275,6 +301,9 @@ public class promc2lcio
 	 */
 	public static ILCCollection convertILCIO(ProMC.ProMCEvent ss, int unit, int lunit)
 	{
+
+
+
 		ILCCollection mcpcoll = new ILCCollection(LCIO.MCPARTICLE);
 		ProMC.ProMCEvent.Particles pa = ss.getParticles(); // true particles
 
