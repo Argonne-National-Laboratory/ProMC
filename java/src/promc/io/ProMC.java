@@ -433,6 +433,58 @@ public final class ProMC {
        * </pre>
        */
       double getWeight();
+
+      // repeated float fdata = 15;
+      /**
+       * <code>repeated float fdata = 15;</code>
+       *
+       * <pre>
+       * event info as you want (array, float) 
+       * </pre>
+       */
+      java.util.List<java.lang.Float> getFdataList();
+      /**
+       * <code>repeated float fdata = 15;</code>
+       *
+       * <pre>
+       * event info as you want (array, float) 
+       * </pre>
+       */
+      int getFdataCount();
+      /**
+       * <code>repeated float fdata = 15;</code>
+       *
+       * <pre>
+       * event info as you want (array, float) 
+       * </pre>
+       */
+      float getFdata(int index);
+
+      // repeated sint64 idata = 16;
+      /**
+       * <code>repeated sint64 idata = 16;</code>
+       *
+       * <pre>
+       * event info as you want (array, varint)
+       * </pre>
+       */
+      java.util.List<java.lang.Long> getIdataList();
+      /**
+       * <code>repeated sint64 idata = 16;</code>
+       *
+       * <pre>
+       * event info as you want (array, varint)
+       * </pre>
+       */
+      int getIdataCount();
+      /**
+       * <code>repeated sint64 idata = 16;</code>
+       *
+       * <pre>
+       * event info as you want (array, varint)
+       * </pre>
+       */
+      long getIdata(int index);
     }
     /**
      * Protobuf type {@code promc.ProMCEvent.Event}
@@ -559,6 +611,48 @@ public final class ProMC {
                 weight_ = input.readDouble();
                 break;
               }
+              case 125: {
+                if (!((mutable_bitField0_ & 0x00004000) == 0x00004000)) {
+                  fdata_ = new java.util.ArrayList<java.lang.Float>();
+                  mutable_bitField0_ |= 0x00004000;
+                }
+                fdata_.add(input.readFloat());
+                break;
+              }
+              case 122: {
+                int length = input.readRawVarint32();
+                int limit = input.pushLimit(length);
+                if (!((mutable_bitField0_ & 0x00004000) == 0x00004000) && input.getBytesUntilLimit() > 0) {
+                  fdata_ = new java.util.ArrayList<java.lang.Float>();
+                  mutable_bitField0_ |= 0x00004000;
+                }
+                while (input.getBytesUntilLimit() > 0) {
+                  fdata_.add(input.readFloat());
+                }
+                input.popLimit(limit);
+                break;
+              }
+              case 128: {
+                if (!((mutable_bitField0_ & 0x00008000) == 0x00008000)) {
+                  idata_ = new java.util.ArrayList<java.lang.Long>();
+                  mutable_bitField0_ |= 0x00008000;
+                }
+                idata_.add(input.readSInt64());
+                break;
+              }
+              case 130: {
+                int length = input.readRawVarint32();
+                int limit = input.pushLimit(length);
+                if (!((mutable_bitField0_ & 0x00008000) == 0x00008000) && input.getBytesUntilLimit() > 0) {
+                  idata_ = new java.util.ArrayList<java.lang.Long>();
+                  mutable_bitField0_ |= 0x00008000;
+                }
+                while (input.getBytesUntilLimit() > 0) {
+                  idata_.add(input.readSInt64());
+                }
+                input.popLimit(limit);
+                break;
+              }
             }
           }
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -567,6 +661,12 @@ public final class ProMC {
           throw new com.google.protobuf.InvalidProtocolBufferException(
               e.getMessage()).setUnfinishedMessage(this);
         } finally {
+          if (((mutable_bitField0_ & 0x00004000) == 0x00004000)) {
+            fdata_ = java.util.Collections.unmodifiableList(fdata_);
+          }
+          if (((mutable_bitField0_ & 0x00008000) == 0x00008000)) {
+            idata_ = java.util.Collections.unmodifiableList(idata_);
+          }
           this.unknownFields = unknownFields.build();
           makeExtensionsImmutable();
         }
@@ -935,6 +1035,76 @@ public final class ProMC {
         return weight_;
       }
 
+      // repeated float fdata = 15;
+      public static final int FDATA_FIELD_NUMBER = 15;
+      private java.util.List<java.lang.Float> fdata_;
+      /**
+       * <code>repeated float fdata = 15;</code>
+       *
+       * <pre>
+       * event info as you want (array, float) 
+       * </pre>
+       */
+      public java.util.List<java.lang.Float>
+          getFdataList() {
+        return fdata_;
+      }
+      /**
+       * <code>repeated float fdata = 15;</code>
+       *
+       * <pre>
+       * event info as you want (array, float) 
+       * </pre>
+       */
+      public int getFdataCount() {
+        return fdata_.size();
+      }
+      /**
+       * <code>repeated float fdata = 15;</code>
+       *
+       * <pre>
+       * event info as you want (array, float) 
+       * </pre>
+       */
+      public float getFdata(int index) {
+        return fdata_.get(index);
+      }
+
+      // repeated sint64 idata = 16;
+      public static final int IDATA_FIELD_NUMBER = 16;
+      private java.util.List<java.lang.Long> idata_;
+      /**
+       * <code>repeated sint64 idata = 16;</code>
+       *
+       * <pre>
+       * event info as you want (array, varint)
+       * </pre>
+       */
+      public java.util.List<java.lang.Long>
+          getIdataList() {
+        return idata_;
+      }
+      /**
+       * <code>repeated sint64 idata = 16;</code>
+       *
+       * <pre>
+       * event info as you want (array, varint)
+       * </pre>
+       */
+      public int getIdataCount() {
+        return idata_.size();
+      }
+      /**
+       * <code>repeated sint64 idata = 16;</code>
+       *
+       * <pre>
+       * event info as you want (array, varint)
+       * </pre>
+       */
+      public long getIdata(int index) {
+        return idata_.get(index);
+      }
+
       private void initFields() {
         number_ = 0;
         processID_ = 0;
@@ -950,6 +1120,8 @@ public final class ProMC {
         scale_ = 0F;
         alphaQCD_ = 0F;
         weight_ = 0D;
+        fdata_ = java.util.Collections.emptyList();
+        idata_ = java.util.Collections.emptyList();
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -1004,6 +1176,12 @@ public final class ProMC {
         }
         if (((bitField0_ & 0x00002000) == 0x00002000)) {
           output.writeDouble(14, weight_);
+        }
+        for (int i = 0; i < fdata_.size(); i++) {
+          output.writeFloat(15, fdata_.get(i));
+        }
+        for (int i = 0; i < idata_.size(); i++) {
+          output.writeSInt64(16, idata_.get(i));
         }
         getUnknownFields().writeTo(output);
       }
@@ -1069,6 +1247,21 @@ public final class ProMC {
         if (((bitField0_ & 0x00002000) == 0x00002000)) {
           size += com.google.protobuf.CodedOutputStream
             .computeDoubleSize(14, weight_);
+        }
+        {
+          int dataSize = 0;
+          dataSize = 4 * getFdataList().size();
+          size += dataSize;
+          size += 1 * getFdataList().size();
+        }
+        {
+          int dataSize = 0;
+          for (int i = 0; i < idata_.size(); i++) {
+            dataSize += com.google.protobuf.CodedOutputStream
+              .computeSInt64SizeNoTag(idata_.get(i));
+          }
+          size += dataSize;
+          size += 2 * getIdataList().size();
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -1218,6 +1411,10 @@ public final class ProMC {
           bitField0_ = (bitField0_ & ~0x00001000);
           weight_ = 0D;
           bitField0_ = (bitField0_ & ~0x00002000);
+          fdata_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00004000);
+          idata_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00008000);
           return this;
         }
 
@@ -1302,6 +1499,16 @@ public final class ProMC {
             to_bitField0_ |= 0x00002000;
           }
           result.weight_ = weight_;
+          if (((bitField0_ & 0x00004000) == 0x00004000)) {
+            fdata_ = java.util.Collections.unmodifiableList(fdata_);
+            bitField0_ = (bitField0_ & ~0x00004000);
+          }
+          result.fdata_ = fdata_;
+          if (((bitField0_ & 0x00008000) == 0x00008000)) {
+            idata_ = java.util.Collections.unmodifiableList(idata_);
+            bitField0_ = (bitField0_ & ~0x00008000);
+          }
+          result.idata_ = idata_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -1359,6 +1566,26 @@ public final class ProMC {
           }
           if (other.hasWeight()) {
             setWeight(other.getWeight());
+          }
+          if (!other.fdata_.isEmpty()) {
+            if (fdata_.isEmpty()) {
+              fdata_ = other.fdata_;
+              bitField0_ = (bitField0_ & ~0x00004000);
+            } else {
+              ensureFdataIsMutable();
+              fdata_.addAll(other.fdata_);
+            }
+            onChanged();
+          }
+          if (!other.idata_.isEmpty()) {
+            if (idata_.isEmpty()) {
+              idata_ = other.idata_;
+              bitField0_ = (bitField0_ & ~0x00008000);
+            } else {
+              ensureIdataIsMutable();
+              idata_.addAll(other.idata_);
+            }
+            onChanged();
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -2069,6 +2296,194 @@ public final class ProMC {
         public Builder clearWeight() {
           bitField0_ = (bitField0_ & ~0x00002000);
           weight_ = 0D;
+          onChanged();
+          return this;
+        }
+
+        // repeated float fdata = 15;
+        private java.util.List<java.lang.Float> fdata_ = java.util.Collections.emptyList();
+        private void ensureFdataIsMutable() {
+          if (!((bitField0_ & 0x00004000) == 0x00004000)) {
+            fdata_ = new java.util.ArrayList<java.lang.Float>(fdata_);
+            bitField0_ |= 0x00004000;
+           }
+        }
+        /**
+         * <code>repeated float fdata = 15;</code>
+         *
+         * <pre>
+         * event info as you want (array, float) 
+         * </pre>
+         */
+        public java.util.List<java.lang.Float>
+            getFdataList() {
+          return java.util.Collections.unmodifiableList(fdata_);
+        }
+        /**
+         * <code>repeated float fdata = 15;</code>
+         *
+         * <pre>
+         * event info as you want (array, float) 
+         * </pre>
+         */
+        public int getFdataCount() {
+          return fdata_.size();
+        }
+        /**
+         * <code>repeated float fdata = 15;</code>
+         *
+         * <pre>
+         * event info as you want (array, float) 
+         * </pre>
+         */
+        public float getFdata(int index) {
+          return fdata_.get(index);
+        }
+        /**
+         * <code>repeated float fdata = 15;</code>
+         *
+         * <pre>
+         * event info as you want (array, float) 
+         * </pre>
+         */
+        public Builder setFdata(
+            int index, float value) {
+          ensureFdataIsMutable();
+          fdata_.set(index, value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated float fdata = 15;</code>
+         *
+         * <pre>
+         * event info as you want (array, float) 
+         * </pre>
+         */
+        public Builder addFdata(float value) {
+          ensureFdataIsMutable();
+          fdata_.add(value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated float fdata = 15;</code>
+         *
+         * <pre>
+         * event info as you want (array, float) 
+         * </pre>
+         */
+        public Builder addAllFdata(
+            java.lang.Iterable<? extends java.lang.Float> values) {
+          ensureFdataIsMutable();
+          super.addAll(values, fdata_);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated float fdata = 15;</code>
+         *
+         * <pre>
+         * event info as you want (array, float) 
+         * </pre>
+         */
+        public Builder clearFdata() {
+          fdata_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00004000);
+          onChanged();
+          return this;
+        }
+
+        // repeated sint64 idata = 16;
+        private java.util.List<java.lang.Long> idata_ = java.util.Collections.emptyList();
+        private void ensureIdataIsMutable() {
+          if (!((bitField0_ & 0x00008000) == 0x00008000)) {
+            idata_ = new java.util.ArrayList<java.lang.Long>(idata_);
+            bitField0_ |= 0x00008000;
+           }
+        }
+        /**
+         * <code>repeated sint64 idata = 16;</code>
+         *
+         * <pre>
+         * event info as you want (array, varint)
+         * </pre>
+         */
+        public java.util.List<java.lang.Long>
+            getIdataList() {
+          return java.util.Collections.unmodifiableList(idata_);
+        }
+        /**
+         * <code>repeated sint64 idata = 16;</code>
+         *
+         * <pre>
+         * event info as you want (array, varint)
+         * </pre>
+         */
+        public int getIdataCount() {
+          return idata_.size();
+        }
+        /**
+         * <code>repeated sint64 idata = 16;</code>
+         *
+         * <pre>
+         * event info as you want (array, varint)
+         * </pre>
+         */
+        public long getIdata(int index) {
+          return idata_.get(index);
+        }
+        /**
+         * <code>repeated sint64 idata = 16;</code>
+         *
+         * <pre>
+         * event info as you want (array, varint)
+         * </pre>
+         */
+        public Builder setIdata(
+            int index, long value) {
+          ensureIdataIsMutable();
+          idata_.set(index, value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated sint64 idata = 16;</code>
+         *
+         * <pre>
+         * event info as you want (array, varint)
+         * </pre>
+         */
+        public Builder addIdata(long value) {
+          ensureIdataIsMutable();
+          idata_.add(value);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated sint64 idata = 16;</code>
+         *
+         * <pre>
+         * event info as you want (array, varint)
+         * </pre>
+         */
+        public Builder addAllIdata(
+            java.lang.Iterable<? extends java.lang.Long> values) {
+          ensureIdataIsMutable();
+          super.addAll(values, idata_);
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>repeated sint64 idata = 16;</code>
+         *
+         * <pre>
+         * event info as you want (array, varint)
+         * </pre>
+         */
+        public Builder clearIdata() {
+          idata_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00008000);
           onChanged();
           return this;
         }
@@ -7237,25 +7652,26 @@ public final class ProMC {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013ProMC.proto\022\005promc\"\262\005\n\nProMCEvent\022&\n\005e" +
+      "\n\013ProMC.proto\022\005promc\"\320\005\n\nProMCEvent\022&\n\005e" +
       "vent\030\001 \001(\0132\027.promc.ProMCEvent.Event\022.\n\tp" +
       "articles\030\002 \001(\0132\033.promc.ProMCEvent.Partic" +
-      "les\032\336\001\n\005Event\022\016\n\006Number\030\001 \001(\005\022\022\n\nProcess" +
+      "les\032\374\001\n\005Event\022\016\n\006Number\030\001 \001(\005\022\022\n\nProcess" +
       "_ID\030\002 \001(\005\022\013\n\003MPI\030\003 \001(\005\022\013\n\003ID1\030\004 \001(\005\022\013\n\003I" +
       "D2\030\005 \001(\005\022\014\n\004PDF1\030\006 \001(\002\022\014\n\004PDF2\030\007 \001(\002\022\n\n\002" +
       "X1\030\010 \001(\002\022\n\n\002X2\030\t \001(\002\022\021\n\tScale_PDF\030\n \001(\002\022" +
       "\021\n\tAlpha_QED\030\013 \001(\002\022\r\n\005Scale\030\014 \001(\002\022\021\n\tAlp" +
-      "ha_QCD\030\r \001(\002\022\016\n\006Weight\030\016 \001(\001\032\352\002\n\tParticl" +
-      "es\022\016\n\002id\030\001 \003(\rB\002\020\001\022\022\n\006pdg_id\030\002 \003(\021B\002\020\001\022\022",
-      "\n\006status\030\003 \003(\rB\002\020\001\022\020\n\004mass\030\004 \003(\004B\002\020\001\022\016\n\002" +
-      "Px\030\005 \003(\022B\002\020\001\022\016\n\002Py\030\006 \003(\022B\002\020\001\022\016\n\002Pz\030\007 \003(\022" +
-      "B\002\020\001\022\023\n\007mother1\030\010 \003(\rB\002\020\001\022\023\n\007mother2\030\t \003" +
-      "(\rB\002\020\001\022\025\n\tdaughter1\030\n \003(\rB\002\020\001\022\025\n\tdaughte" +
-      "r2\030\013 \003(\rB\002\020\001\022\023\n\007barcode\030\014 \003(\021B\002\020\001\022\r\n\001X\030\r" +
-      " \003(\021B\002\020\001\022\r\n\001Y\030\016 \003(\021B\002\020\001\022\r\n\001Z\030\017 \003(\021B\002\020\001\022\r" +
-      "\n\001T\030\020 \003(\rB\002\020\001\022\022\n\006weight\030\021 \003(\004B\002\020\001\022\022\n\006cha" +
-      "rge\030\022 \003(\021B\002\020\001\022\022\n\006energy\030\023 \003(\022B\002\020\001B\021\n\010pro" +
-      "mc.ioB\005ProMC"
+      "ha_QCD\030\r \001(\002\022\016\n\006Weight\030\016 \001(\001\022\r\n\005fdata\030\017 " +
+      "\003(\002\022\r\n\005idata\030\020 \003(\022\032\352\002\n\tParticles\022\016\n\002id\030\001",
+      " \003(\rB\002\020\001\022\022\n\006pdg_id\030\002 \003(\021B\002\020\001\022\022\n\006status\030\003" +
+      " \003(\rB\002\020\001\022\020\n\004mass\030\004 \003(\004B\002\020\001\022\016\n\002Px\030\005 \003(\022B\002" +
+      "\020\001\022\016\n\002Py\030\006 \003(\022B\002\020\001\022\016\n\002Pz\030\007 \003(\022B\002\020\001\022\023\n\007mo" +
+      "ther1\030\010 \003(\rB\002\020\001\022\023\n\007mother2\030\t \003(\rB\002\020\001\022\025\n\t" +
+      "daughter1\030\n \003(\rB\002\020\001\022\025\n\tdaughter2\030\013 \003(\rB\002" +
+      "\020\001\022\023\n\007barcode\030\014 \003(\021B\002\020\001\022\r\n\001X\030\r \003(\021B\002\020\001\022\r" +
+      "\n\001Y\030\016 \003(\021B\002\020\001\022\r\n\001Z\030\017 \003(\021B\002\020\001\022\r\n\001T\030\020 \003(\rB" +
+      "\002\020\001\022\022\n\006weight\030\021 \003(\004B\002\020\001\022\022\n\006charge\030\022 \003(\021B" +
+      "\002\020\001\022\022\n\006energy\030\023 \003(\022B\002\020\001B\021\n\010promc.ioB\005Pro" +
+      "MC"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -7273,7 +7689,7 @@ public final class ProMC {
           internal_static_promc_ProMCEvent_Event_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_promc_ProMCEvent_Event_descriptor,
-              new java.lang.String[] { "Number", "ProcessID", "MPI", "ID1", "ID2", "PDF1", "PDF2", "X1", "X2", "ScalePDF", "AlphaQED", "Scale", "AlphaQCD", "Weight", });
+              new java.lang.String[] { "Number", "ProcessID", "MPI", "ID1", "ID2", "PDF1", "PDF2", "X1", "X2", "ScalePDF", "AlphaQED", "Scale", "AlphaQCD", "Weight", "Fdata", "Idata", });
           internal_static_promc_ProMCEvent_Particles_descriptor =
             internal_static_promc_ProMCEvent_descriptor.getNestedTypes().get(1);
           internal_static_promc_ProMCEvent_Particles_fieldAccessorTable = new

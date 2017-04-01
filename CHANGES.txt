@@ -1,5 +1,12 @@
+ProMC 1.6 Update on March 2017 
+  Includes additional paramaters for MC info
+  Example examples/promc2lcio
+  authors: S.Chekanov
+
 ProMC 1.6 Update 2016 (November 27)
   Includes a templates for the EIC project (Alexander Kiselev)
+  Includes additional paramaters for MC info
+  Example promc2lcio 
   authors: S.Chekanov, A.Kiselev
 
 ProMC 1.5.2 Update 2016 (Oct)

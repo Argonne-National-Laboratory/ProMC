@@ -196,8 +196,40 @@ public class promc2lcio
 
                         ILCCollection generic = new ILCCollection(LCIO.LCGENERICOBJECT);
                         generic.add(obj);
-                        evt.addCollection(generic,"MCParam");
+                        evt.addCollection(generic,"MCInfo");
 
+                        
+                        // extra MC parameters
+                        java.util.List<java.lang.Float> fdata=proev.getFdataList();
+                        java.util.List<java.lang.Long>  idata=proev.getIdataList();
+                        ILCGenericObject ext =null;
+                        ILCCollection extra = null;
+
+                        if (idata != null)
+                              if (proev.getIdataCount()>0) ext = new ILCGenericObject();
+                        if (fdata != null)
+                              if (proev.getFdataCount()>0) ext = new ILCGenericObject();
+
+
+                        if (idata != null)
+                         if (proev.getIdataCount()>0) {
+                          for (int i=0; i<idata.size(); i++) ext.setIntVal((idata.get(i)).intValue(),i);
+                          extra = new ILCCollection(LCIO.LCGENERICOBJECT);
+                          extra.add(ext);
+                          evt.addCollection(generic,"MCParameters");
+                        }
+
+
+                        if (fdata != null) 
+                        if (proev.getFdataCount()>0) { 
+                          if (extra == null)  extra = new ILCCollection(LCIO.LCGENERICOBJECT);
+                          for (int i=0; i<fdata.size(); i++) ext.setDoubleVal(new Double(fdata.get(i)),i);
+                          extra.add(ext);
+                          evt.addCollection(generic,"MCParameters");
+                        }
+
+
+                        
 
 			// create and add some mc particles
 			ILCCollection mcVec = new ILCCollection(LCIO.MCPARTICLE);

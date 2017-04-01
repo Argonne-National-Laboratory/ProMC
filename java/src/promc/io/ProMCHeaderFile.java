@@ -142,7 +142,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf1 = 8;</code>
      *
      * <pre>
-     *  PDF (id1, x1, Q) This should be of the form x*f(x)
+     * PDF (id1, x1, Q) This should be of the form x*f(x)
      * </pre>
      */
     boolean hasPdf1();
@@ -150,7 +150,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf1 = 8;</code>
      *
      * <pre>
-     *  PDF (id1, x1, Q) This should be of the form x*f(x)
+     * PDF (id1, x1, Q) This should be of the form x*f(x)
      * </pre>
      */
     int getPdf1();
@@ -160,7 +160,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf2 = 9;</code>
      *
      * <pre>
-     *  PDF (id2, x2, Q) This should be of the form x*f(x)
+     * PDF (id2, x2, Q) This should be of the form x*f(x)
      * </pre>
      */
     boolean hasPdf2();
@@ -168,7 +168,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf2 = 9;</code>
      *
      * <pre>
-     *  PDF (id2, x2, Q) This should be of the form x*f(x)
+     * PDF (id2, x2, Q) This should be of the form x*f(x)
      * </pre>
      */
     int getPdf2();
@@ -3383,7 +3383,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf1 = 8;</code>
      *
      * <pre>
-     *  PDF (id1, x1, Q) This should be of the form x*f(x)
+     * PDF (id1, x1, Q) This should be of the form x*f(x)
      * </pre>
      */
     public boolean hasPdf1() {
@@ -3393,7 +3393,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf1 = 8;</code>
      *
      * <pre>
-     *  PDF (id1, x1, Q) This should be of the form x*f(x)
+     * PDF (id1, x1, Q) This should be of the form x*f(x)
      * </pre>
      */
     public int getPdf1() {
@@ -3407,7 +3407,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf2 = 9;</code>
      *
      * <pre>
-     *  PDF (id2, x2, Q) This should be of the form x*f(x)
+     * PDF (id2, x2, Q) This should be of the form x*f(x)
      * </pre>
      */
     public boolean hasPdf2() {
@@ -3417,7 +3417,7 @@ public final class ProMCHeaderFile {
      * <code>optional int32 pdf2 = 9;</code>
      *
      * <pre>
-     *  PDF (id2, x2, Q) This should be of the form x*f(x)
+     * PDF (id2, x2, Q) This should be of the form x*f(x)
      * </pre>
      */
     public int getPdf2() {
@@ -5081,7 +5081,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf1 = 8;</code>
        *
        * <pre>
-       *  PDF (id1, x1, Q) This should be of the form x*f(x)
+       * PDF (id1, x1, Q) This should be of the form x*f(x)
        * </pre>
        */
       public boolean hasPdf1() {
@@ -5091,7 +5091,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf1 = 8;</code>
        *
        * <pre>
-       *  PDF (id1, x1, Q) This should be of the form x*f(x)
+       * PDF (id1, x1, Q) This should be of the form x*f(x)
        * </pre>
        */
       public int getPdf1() {
@@ -5101,7 +5101,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf1 = 8;</code>
        *
        * <pre>
-       *  PDF (id1, x1, Q) This should be of the form x*f(x)
+       * PDF (id1, x1, Q) This should be of the form x*f(x)
        * </pre>
        */
       public Builder setPdf1(int value) {
@@ -5114,7 +5114,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf1 = 8;</code>
        *
        * <pre>
-       *  PDF (id1, x1, Q) This should be of the form x*f(x)
+       * PDF (id1, x1, Q) This should be of the form x*f(x)
        * </pre>
        */
       public Builder clearPdf1() {
@@ -5130,7 +5130,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf2 = 9;</code>
        *
        * <pre>
-       *  PDF (id2, x2, Q) This should be of the form x*f(x)
+       * PDF (id2, x2, Q) This should be of the form x*f(x)
        * </pre>
        */
       public boolean hasPdf2() {
@@ -5140,7 +5140,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf2 = 9;</code>
        *
        * <pre>
-       *  PDF (id2, x2, Q) This should be of the form x*f(x)
+       * PDF (id2, x2, Q) This should be of the form x*f(x)
        * </pre>
        */
       public int getPdf2() {
@@ -5150,7 +5150,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf2 = 9;</code>
        *
        * <pre>
-       *  PDF (id2, x2, Q) This should be of the form x*f(x)
+       * PDF (id2, x2, Q) This should be of the form x*f(x)
        * </pre>
        */
       public Builder setPdf2(int value) {
@@ -5163,7 +5163,7 @@ public final class ProMCHeaderFile {
        * <code>optional int32 pdf2 = 9;</code>
        *
        * <pre>
-       *  PDF (id2, x2, Q) This should be of the form x*f(x)
+       * PDF (id2, x2, Q) This should be of the form x*f(x)
        * </pre>
        */
       public Builder clearPdf2() {

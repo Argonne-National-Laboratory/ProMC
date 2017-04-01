@@ -437,6 +437,32 @@ public class MainGui {
 		model.addRow(new Object[] { new String("Weight"),
 				getDouble(ev.getWeight()) });
 
+
+                // add extra info on MC
+                // extra MC parameters
+                java.util.List<java.lang.Float> fdata=ev.getFdataList();
+                java.util.List<java.lang.Long>  idata=ev.getIdataList();
+
+                 if (idata != null)
+                 if (ev.getIdataCount()>0) {
+                         for (int i=0; i<idata.size(); i++) { 
+                              String stext = "int " + Integer.toString(i); 
+                              model.addRow(new Object[] { new String(stext),
+                                getInt(  (idata.get(i)).intValue() ) });
+                  }
+                }
+
+                if (fdata != null)
+                 if (ev.getFdataCount()>0) {
+                         for (int i=0; i<fdata.size(); i++) {
+                              String stext = "double " + Integer.toString(i);
+                              model.addRow(new Object[] { new String(stext),
+                                getDouble(  (fdata.get(i)) ) });
+                  }
+                }
+
+
+
 		table.setModel(model);
 
 	}

@@ -27,6 +27,8 @@ message ProMCEvent {
          optional float Scale     = 12;   // Scale   energy scale, see hep-ph/0109068
          optional float Alpha_QCD = 13;   // QCD coupling, see hep-ph/0109068
          optional double Weight   = 14;   // event weight 
+         repeated float  fdata   =  15;   // event info as you want (array, float) 
+         repeated sint64 idata   =  16;   // event info as you want (array, varint)
    }
 
 

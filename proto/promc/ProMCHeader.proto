@@ -18,18 +18,18 @@ message ProMCHeader {
     optional double  x1=5;        // fraction of beam momentum carried by first parton (”beam side”)
     optional double  x2=6;        // fraction of beam momentum carried by second parton (”target side”)
     optional double  scalepdf=7;  // Q-scale used in evaluation of PDF’s (in GeV)
-    optional int32   pdf1=8;      //  PDF (id1, x1, Q) This should be of the form x*f(x)
-    optional int32   pdf2=9;      //  PDF (id2, x2, Q) This should be of the form x*f(x)
+    optional int32   pdf1=8;      // PDF (id1, x1, Q) This should be of the form x*f(x)
+    optional int32   pdf2=9;      // PDF (id2, x2, Q) This should be of the form x*f(x)
     optional double  eCM=10;      // CM energy
     optional double  s=11;        // CM energy
     optional string  name=12;     // process name 
     optional int32   code=13;     // process code 
     optional double cross_section=14;       //  cross section in pb
     optional double cross_section_error=15; //  error associated with this cross section in pb 
-    optional  int32  MomentumUnit=16;     // values are MEV or GEV
-    optional  int32  LengthUnit=17;       // values are MM or CM
-    optional  string NameMomentumUnit=18; // return the unit designation as a string
-    optional  string NameLengthUnit=19;   // return the unit designation as a string 
+    optional int32  MomentumUnit=16;     // values are MEV or GEV
+    optional int32  LengthUnit=17;       // values are MM or CM
+    optional string NameMomentumUnit=18; // return the unit designation as a string
+    optional string NameLengthUnit=19;   // return the unit designation as a string 
     optional double weight=20;            // event weight
     optional double requested_events=21;  // total number of requested events 
 
