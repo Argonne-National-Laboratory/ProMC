@@ -147,8 +147,14 @@ public class promc2lcio
 		runHdr.setDescription( decription.replace("\n",""));
 		//runHdr.addActiveSubdetector(ecalName);
 		//runHdr.addActiveSubdetector(tpcName);
-		runHdr.getParameters().setValue("ProMC",version) ;
-
+		runHdr.getParameters().setValue("ProMC:version",version) ;
+                runHdr.getParameters().setValue("ProMC:lastmodified",promc.getLastModified()) ;
+                runHdr.getParameters().setValue("ProMC:SigmaPB", (float)stat.getCrossSectionAccumulated() ) ;
+                runHdr.getParameters().setValue("ProMC:SigmaErrorPB",(float)stat.getCrossSectionErrorAccumulated()) ;
+                runHdr.getParameters().setValue("ProMC:EventsRequested",(float)promc.getRequestedEvents()) ;
+                runHdr.getParameters().setValue("ProMC:LumiPBINV",(float)stat.getLuminosityAccumulated()) ;
+                runHdr.getParameters().setValue("ProMC:eCM",(float)header.getECM()) ;
+ 
 		float Fcross = Float.parseFloat(cross);
 		float ERRcross = Float.parseFloat(error);
 		float[] idx = { Fcross,ERRcross} ;
@@ -163,11 +169,11 @@ public class promc2lcio
 			//  MCEvent mcevent=convert(promc.read( event ), unit, lunit);
 
 			ILCEvent evt = new ILCEvent();
-			evt.setRunNumber(1000);
+			evt.setRunNumber(1);
 			evt.setEventNumber(event);
 			evt.setDetectorName(detName);
 			evt.setWeight( proev.getWeight()  ) ;
-			evt.setTimeStamp(0);
+			evt.setTimeStamp( (int) (new Date().getTime()/1000) );
 
                         // add generator information per each event
                          ILCGenericObject obj = new ILCGenericObject() ;
@@ -193,6 +199,37 @@ public class promc2lcio
                          obj.setIntVal(proev.getProcessID(),0);
                          obj.setIntVal(proev.getID1(),1);
                          obj.setIntVal(proev.getID2(),2);
+
+
+
+                         // adding parameters
+                         LCParameters 	param = evt.getParameters(); 
+                         param.setValue("EVGEN:ProcessID", (int)proev.getProcessID());
+                         param.setValue("EVGEN:Process", header.getName());
+                         param.setValue("EVGEN:Weight", (float)proev.getWeight());
+                         param.setValue("EVGEN:Code", (int)header.getCode());
+                         param.setValue("EVGEN:eCM", (float)header.getECM());
+                         param.setValue("EVGEN:ID1", (int)proev.getID1());
+                         param.setValue("EVGEN:ID2", (int)proev.getID2());
+                         param.setValue("EVGEN:ScalePDF", (float)scalePDF);
+                         param.setValue("EVGEN:Scale", (float)scale);
+                         param.setValue("EVGEN:AlphaQED", (float)qed);
+                         param.setValue("EVGEN:AlphaQCD", (float)qcd);
+                         param.setValue("EVGEN:PDF1", (float)pdf1);
+                         param.setValue("EVGEN:PDF2", (float)pdf2);
+                         param.setValue("EVGEN:X1", (float)x1);
+                         param.setValue("EVGEN:X2", (float)x2);
+                         param.setValue("EVGEN:SigmaPB", (float)stat.getCrossSectionAccumulated());
+                         param.setValue("EVGEN:SigmaErrorPB", (float)stat.getCrossSectionErrorAccumulated());
+                         param.setValue("EVGEN:EventsRequested", (float)promc.getRequestedEvents());
+                         // specific for DIS (how it was included to ProMC)
+                         param.setValue("EVGEN:DIS:W", (float)scale);
+                         param.setValue("EVGEN:DIS:Q2", (float)scalePDF);
+                         param.setValue("EVGEN:DIS:ISR", 0);
+                         param.setValue("EVGEN:DIS:YBJ", (float)qed);
+                         param.setValue("EVGEN:DIS:XBJ", (float)qcd);
+
+
 
                         ILCCollection generic = new ILCCollection(LCIO.LCGENERICOBJECT);
                         generic.add(obj);
