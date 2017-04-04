@@ -57,6 +57,7 @@ public class Ls {
                       System.exit(1);
                   }
 
+
                 String[] surl_array=HepSim.urlRedirector(surl);
                 if (surl_array != null) {
                  surl=surl_array[0];

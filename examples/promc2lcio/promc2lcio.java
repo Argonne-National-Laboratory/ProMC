@@ -160,17 +160,30 @@ public class promc2lcio
 		float[] idx = { Fcross,ERRcross} ;
 		runHdr.getParameters().setValues("cross_section_pb",idx) ;
 		lcWrt.writeRunHeader(runHdr);
+            
+                // 0 event is a dummy. It skept by the simulation
+                ILCEvent evt = new ILCEvent();
+                evt.setRunNumber((int)(nevent));    // set run number to Nr of events (orbitrary for MC)
+                evt.setEventNumber(0);               //automatic 
+                evt.setDetectorName(detName);
+                evt.setWeight(0) ;
+                LCParameters   param = evt.getParameters();
+                param.setValue("_idrup", header.getCode());
+                param.setValue("SLIC_VERSION", header.getName());
+                param.setValue("GEANT4_VERSION", "DUMMY TRUTH EVENT");
+                param.setValue("ProMC:version",version);
+                param.setValue("ProMC:lastmodified",promc.getLastModified());
+                ILCCollection mcnone = new ILCCollection(LCIO.MCPARTICLE);
+                evt.addCollection(mcnone, LCIO.MCPARTICLE);
+                lcWrt.writeEvent(evt);
 
+                // loop over events 
 		for (int event=0; event<nevent; event++){
-
 			ProMC.ProMCEvent ss = promc.read( event );
 			ProMC.ProMCEvent.Event proev = ss.getEvent(); // event
-
-			//  MCEvent mcevent=convert(promc.read( event ), unit, lunit);
-
-			ILCEvent evt = new ILCEvent();
-			evt.setRunNumber(1);
-			evt.setEventNumber(event);
+			evt = new ILCEvent();
+			evt.setRunNumber(1);             // set to 1 for consistancy with lcio2hepsim 
+			evt.setEventNumber(event+1);     //automatic 
 			evt.setDetectorName(detName);
 			evt.setWeight( proev.getWeight()  ) ;
 			evt.setTimeStamp( (int) (new Date().getTime()/1000) );
@@ -203,7 +216,7 @@ public class promc2lcio
 
 
                          // adding parameters
-                         LCParameters 	param = evt.getParameters(); 
+                         param = evt.getParameters(); 
                          param.setValue("EVGEN:ProcessID", (int)proev.getProcessID());
                          param.setValue("EVGEN:Process", header.getName());
                          param.setValue("EVGEN:Weight", (float)proev.getWeight());
@@ -265,14 +278,9 @@ public class promc2lcio
                           evt.addCollection(generic,"MCParameters");
                         }
 
-
-                        
-
 			// create and add some mc particles
-			ILCCollection mcVec = new ILCCollection(LCIO.MCPARTICLE);
 			ILCCollection mcpcoll = convertILCIO(ss, unit, lunit);
 			evt.addCollection(mcpcoll, LCIO.MCPARTICLE);
-
 
 			int percentComplete = (int)((double)event * 100 / nevent);
 			if(percentComplete % 5 == 0 && percentComplete > oldPercentComplete) {
@@ -281,8 +289,6 @@ public class promc2lcio
 			}
 
 
-
-			//      evt.addCollection(mcVec, "MCParticle");
 
 
 			// write the event to the file

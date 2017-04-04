@@ -479,6 +479,7 @@ public static boolean ping(String surl, int timeout) {
                 if (smart>0) {
                  try {
                     URL url = new URL(surl);
+                    // System.out.println(surl);
                     BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                     String line;
                     String NEWURL="";
@@ -491,7 +492,7 @@ public static boolean ping(String surl, int timeout) {
                     NEWURL=NEWURL.replace("\n","");
                     surl=NEWURL;
                     String[] parts =  surl.split(";");
-                    if (parts.length==0) return null;
+
 
                     if (parts.length==0) {
                       if (smart==2) ErrorMessage("Name of the dataset was not found.");
