@@ -1,7 +1,9 @@
+/*
+* Reads ProMC and converts it the the LCIO format.
+*/
 import java.io.*;
 import java.util.*;
 import static java.lang.Math.sqrt;
-
 import hep.lcio.event.*;
 import hep.lcio.io.*;
 import hep.lcio.implementation.event.*;
@@ -17,7 +19,6 @@ import hep.physics.vec.HepLorentzVector;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -29,10 +30,10 @@ import hepsim.*;
 import java.util.zip.*;
 
 /**
- * Reads in ProMC output pair file and creates events in LCIO format.
+ * Reads ProMC and converts it the the LCIO format.
  * The code is based on STDHEP convertors by Tony J. 
  * @author S.Chekanov (ANL), J.Zuzelski (ANL), and Jeremy McCormick <jeremym@slac.stanford.edu>.  
- * @version 1.2
+ * @version 1.3
  */
 public class promc2lcio
 {
@@ -161,29 +162,14 @@ public class promc2lcio
 		runHdr.getParameters().setValues("cross_section_pb",idx) ;
 		lcWrt.writeRunHeader(runHdr);
             
-                // 0 event is a dummy. It skept by the simulation
-                ILCEvent evt = new ILCEvent();
-                evt.setRunNumber((int)(nevent));    // set run number to Nr of events (orbitrary for MC)
-                evt.setEventNumber(0);               //automatic 
-                evt.setDetectorName(detName);
-                evt.setWeight(0) ;
-                LCParameters   param = evt.getParameters();
-                param.setValue("_idrup", header.getCode());
-                param.setValue("SLIC_VERSION", header.getName());
-                param.setValue("GEANT4_VERSION", "DUMMY TRUTH EVENT");
-                param.setValue("ProMC:version",version);
-                param.setValue("ProMC:lastmodified",promc.getLastModified());
-                ILCCollection mcnone = new ILCCollection(LCIO.MCPARTICLE);
-                evt.addCollection(mcnone, LCIO.MCPARTICLE);
-                lcWrt.writeEvent(evt);
 
                 // loop over events 
 		for (int event=0; event<nevent; event++){
 			ProMC.ProMCEvent ss = promc.read( event );
 			ProMC.ProMCEvent.Event proev = ss.getEvent(); // event
-			evt = new ILCEvent();
-			evt.setRunNumber(1);             // set to 1 for consistancy with lcio2hepsim 
-			evt.setEventNumber(event+1);     //automatic 
+			ILCEvent evt = new ILCEvent();
+			evt.setRunNumber(1);            // set to 1 for consistancy with lcio2hepsim 
+			evt.setEventNumber(event+1);    //automatic 
 			evt.setDetectorName(detName);
 			evt.setWeight( proev.getWeight()  ) ;
 			evt.setTimeStamp( (int) (new Date().getTime()/1000) );
@@ -216,7 +202,7 @@ public class promc2lcio
 
 
                          // adding parameters
-                         param = evt.getParameters(); 
+                         LCParameters param = evt.getParameters(); 
                          param.setValue("EVGEN:ProcessID", (int)proev.getProcessID());
                          param.setValue("EVGEN:Process", header.getName());
                          param.setValue("EVGEN:Weight", (float)proev.getWeight());
