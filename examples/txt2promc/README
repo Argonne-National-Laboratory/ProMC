@@ -1,6 +1,6 @@
 # Simple conversion from txt file ee250gev.dat to PROMC
 # Run this script to get well-defined ProMC
-
+# S.Chekanov, D.Blyth (ANL)
 
 # cross section in pb for the events of this file
 xsec=100.0

@@ -174,7 +174,7 @@ int main(int argc, char** argv) {
   while (std::getline(file, line))
     {
       istringstream linestream(line);  
-      if (line == "#END") {new_event = true; epbook->write(promc); } // write ProMC event 
+      if (line == "#END") {new_event = true; epbook->write(promc); promc.Clear(); } // write ProMC event 
       if (line.substr(0,1) == "#") continue;
       // Process str
       std::string name; 
@@ -184,25 +184,24 @@ int main(int argc, char** argv) {
 
       // start a new event and fill some info
       if (new_event) { 
-          ProMCEvent promc; // create ProMC event
           // some event info using named variables
           ProMCEvent_Event  *eve= promc.mutable_event();
           eve->set_number(nev+1);
           eve->set_scale(1.0);  // define scale of the process (optional) 
           eve->set_weight(1.0); // event weight (optional)  
-          eve->set_alpha_qed(1.0);
-          eve->set_alpha_qcd(1.0);
-          eve->set_process_id(0); // process ID (optional)  
+          eve->set_alpha_qed(0.166);
+          eve->set_alpha_qcd(0.122);
+          eve->set_process_id(10); // process ID (optional)  
 
           // -- do you also need to fill some arrays for this event with weights etc? You can do this too -- 
-          // add double values 
-          eve->add_fdata((double)0.091);
-          eve->add_fdata((double)0.092);
+          // add any double values 
+          eve->add_fdata((double)(0.01*nev));
+          eve->add_fdata((double)(0.092+nev));
           // .. add as many as you like
 
-          // add integer values 
-          eve->add_idata(0);
-          eve->add_idata(2);
+          // add any integer values 
+          eve->add_idata(nev*10);
+          eve->add_idata(nev+20);
           //.. add as many as you like
 
           particle=1;
