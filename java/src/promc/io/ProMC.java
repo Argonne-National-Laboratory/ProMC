@@ -434,35 +434,35 @@ public final class ProMC {
        */
       double getWeight();
 
-      // repeated float fdata = 15;
+      // repeated double fdata = 15 [packed = true];
       /**
-       * <code>repeated float fdata = 15;</code>
+       * <code>repeated double fdata = 15 [packed = true];</code>
        *
        * <pre>
-       * event info as you want (array, float) 
+       * event info as you want (array, double) 
        * </pre>
        */
-      java.util.List<java.lang.Float> getFdataList();
+      java.util.List<java.lang.Double> getFdataList();
       /**
-       * <code>repeated float fdata = 15;</code>
+       * <code>repeated double fdata = 15 [packed = true];</code>
        *
        * <pre>
-       * event info as you want (array, float) 
+       * event info as you want (array, double) 
        * </pre>
        */
       int getFdataCount();
       /**
-       * <code>repeated float fdata = 15;</code>
+       * <code>repeated double fdata = 15 [packed = true];</code>
        *
        * <pre>
-       * event info as you want (array, float) 
+       * event info as you want (array, double) 
        * </pre>
        */
-      float getFdata(int index);
+      double getFdata(int index);
 
-      // repeated sint64 idata = 16;
+      // repeated sint64 idata = 16 [packed = true];
       /**
-       * <code>repeated sint64 idata = 16;</code>
+       * <code>repeated sint64 idata = 16 [packed = true];</code>
        *
        * <pre>
        * event info as you want (array, varint)
@@ -470,7 +470,7 @@ public final class ProMC {
        */
       java.util.List<java.lang.Long> getIdataList();
       /**
-       * <code>repeated sint64 idata = 16;</code>
+       * <code>repeated sint64 idata = 16 [packed = true];</code>
        *
        * <pre>
        * event info as you want (array, varint)
@@ -478,7 +478,7 @@ public final class ProMC {
        */
       int getIdataCount();
       /**
-       * <code>repeated sint64 idata = 16;</code>
+       * <code>repeated sint64 idata = 16 [packed = true];</code>
        *
        * <pre>
        * event info as you want (array, varint)
@@ -611,23 +611,23 @@ public final class ProMC {
                 weight_ = input.readDouble();
                 break;
               }
-              case 125: {
+              case 121: {
                 if (!((mutable_bitField0_ & 0x00004000) == 0x00004000)) {
-                  fdata_ = new java.util.ArrayList<java.lang.Float>();
+                  fdata_ = new java.util.ArrayList<java.lang.Double>();
                   mutable_bitField0_ |= 0x00004000;
                 }
-                fdata_.add(input.readFloat());
+                fdata_.add(input.readDouble());
                 break;
               }
               case 122: {
                 int length = input.readRawVarint32();
                 int limit = input.pushLimit(length);
                 if (!((mutable_bitField0_ & 0x00004000) == 0x00004000) && input.getBytesUntilLimit() > 0) {
-                  fdata_ = new java.util.ArrayList<java.lang.Float>();
+                  fdata_ = new java.util.ArrayList<java.lang.Double>();
                   mutable_bitField0_ |= 0x00004000;
                 }
                 while (input.getBytesUntilLimit() > 0) {
-                  fdata_.add(input.readFloat());
+                  fdata_.add(input.readDouble());
                 }
                 input.popLimit(limit);
                 break;
@@ -1035,46 +1035,47 @@ public final class ProMC {
         return weight_;
       }
 
-      // repeated float fdata = 15;
+      // repeated double fdata = 15 [packed = true];
       public static final int FDATA_FIELD_NUMBER = 15;
-      private java.util.List<java.lang.Float> fdata_;
+      private java.util.List<java.lang.Double> fdata_;
       /**
-       * <code>repeated float fdata = 15;</code>
+       * <code>repeated double fdata = 15 [packed = true];</code>
        *
        * <pre>
-       * event info as you want (array, float) 
+       * event info as you want (array, double) 
        * </pre>
        */
-      public java.util.List<java.lang.Float>
+      public java.util.List<java.lang.Double>
           getFdataList() {
         return fdata_;
       }
       /**
-       * <code>repeated float fdata = 15;</code>
+       * <code>repeated double fdata = 15 [packed = true];</code>
        *
        * <pre>
-       * event info as you want (array, float) 
+       * event info as you want (array, double) 
        * </pre>
        */
       public int getFdataCount() {
         return fdata_.size();
       }
       /**
-       * <code>repeated float fdata = 15;</code>
+       * <code>repeated double fdata = 15 [packed = true];</code>
        *
        * <pre>
-       * event info as you want (array, float) 
+       * event info as you want (array, double) 
        * </pre>
        */
-      public float getFdata(int index) {
+      public double getFdata(int index) {
         return fdata_.get(index);
       }
+      private int fdataMemoizedSerializedSize = -1;
 
-      // repeated sint64 idata = 16;
+      // repeated sint64 idata = 16 [packed = true];
       public static final int IDATA_FIELD_NUMBER = 16;
       private java.util.List<java.lang.Long> idata_;
       /**
-       * <code>repeated sint64 idata = 16;</code>
+       * <code>repeated sint64 idata = 16 [packed = true];</code>
        *
        * <pre>
        * event info as you want (array, varint)
@@ -1085,7 +1086,7 @@ public final class ProMC {
         return idata_;
       }
       /**
-       * <code>repeated sint64 idata = 16;</code>
+       * <code>repeated sint64 idata = 16 [packed = true];</code>
        *
        * <pre>
        * event info as you want (array, varint)
@@ -1095,7 +1096,7 @@ public final class ProMC {
         return idata_.size();
       }
       /**
-       * <code>repeated sint64 idata = 16;</code>
+       * <code>repeated sint64 idata = 16 [packed = true];</code>
        *
        * <pre>
        * event info as you want (array, varint)
@@ -1104,6 +1105,7 @@ public final class ProMC {
       public long getIdata(int index) {
         return idata_.get(index);
       }
+      private int idataMemoizedSerializedSize = -1;
 
       private void initFields() {
         number_ = 0;
@@ -1177,11 +1179,19 @@ public final class ProMC {
         if (((bitField0_ & 0x00002000) == 0x00002000)) {
           output.writeDouble(14, weight_);
         }
+        if (getFdataList().size() > 0) {
+          output.writeRawVarint32(122);
+          output.writeRawVarint32(fdataMemoizedSerializedSize);
+        }
         for (int i = 0; i < fdata_.size(); i++) {
-          output.writeFloat(15, fdata_.get(i));
+          output.writeDoubleNoTag(fdata_.get(i));
+        }
+        if (getIdataList().size() > 0) {
+          output.writeRawVarint32(130);
+          output.writeRawVarint32(idataMemoizedSerializedSize);
         }
         for (int i = 0; i < idata_.size(); i++) {
-          output.writeSInt64(16, idata_.get(i));
+          output.writeSInt64NoTag(idata_.get(i));
         }
         getUnknownFields().writeTo(output);
       }
@@ -1250,9 +1260,14 @@ public final class ProMC {
         }
         {
           int dataSize = 0;
-          dataSize = 4 * getFdataList().size();
+          dataSize = 8 * getFdataList().size();
           size += dataSize;
-          size += 1 * getFdataList().size();
+          if (!getFdataList().isEmpty()) {
+            size += 1;
+            size += com.google.protobuf.CodedOutputStream
+                .computeInt32SizeNoTag(dataSize);
+          }
+          fdataMemoizedSerializedSize = dataSize;
         }
         {
           int dataSize = 0;
@@ -1261,7 +1276,12 @@ public final class ProMC {
               .computeSInt64SizeNoTag(idata_.get(i));
           }
           size += dataSize;
-          size += 2 * getIdataList().size();
+          if (!getIdataList().isEmpty()) {
+            size += 2;
+            size += com.google.protobuf.CodedOutputStream
+                .computeInt32SizeNoTag(dataSize);
+          }
+          idataMemoizedSerializedSize = dataSize;
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -2300,91 +2320,91 @@ public final class ProMC {
           return this;
         }
 
-        // repeated float fdata = 15;
-        private java.util.List<java.lang.Float> fdata_ = java.util.Collections.emptyList();
+        // repeated double fdata = 15 [packed = true];
+        private java.util.List<java.lang.Double> fdata_ = java.util.Collections.emptyList();
         private void ensureFdataIsMutable() {
           if (!((bitField0_ & 0x00004000) == 0x00004000)) {
-            fdata_ = new java.util.ArrayList<java.lang.Float>(fdata_);
+            fdata_ = new java.util.ArrayList<java.lang.Double>(fdata_);
             bitField0_ |= 0x00004000;
            }
         }
         /**
-         * <code>repeated float fdata = 15;</code>
+         * <code>repeated double fdata = 15 [packed = true];</code>
          *
          * <pre>
-         * event info as you want (array, float) 
+         * event info as you want (array, double) 
          * </pre>
          */
-        public java.util.List<java.lang.Float>
+        public java.util.List<java.lang.Double>
             getFdataList() {
           return java.util.Collections.unmodifiableList(fdata_);
         }
         /**
-         * <code>repeated float fdata = 15;</code>
+         * <code>repeated double fdata = 15 [packed = true];</code>
          *
          * <pre>
-         * event info as you want (array, float) 
+         * event info as you want (array, double) 
          * </pre>
          */
         public int getFdataCount() {
           return fdata_.size();
         }
         /**
-         * <code>repeated float fdata = 15;</code>
+         * <code>repeated double fdata = 15 [packed = true];</code>
          *
          * <pre>
-         * event info as you want (array, float) 
+         * event info as you want (array, double) 
          * </pre>
          */
-        public float getFdata(int index) {
+        public double getFdata(int index) {
           return fdata_.get(index);
         }
         /**
-         * <code>repeated float fdata = 15;</code>
+         * <code>repeated double fdata = 15 [packed = true];</code>
          *
          * <pre>
-         * event info as you want (array, float) 
+         * event info as you want (array, double) 
          * </pre>
          */
         public Builder setFdata(
-            int index, float value) {
+            int index, double value) {
           ensureFdataIsMutable();
           fdata_.set(index, value);
           onChanged();
           return this;
         }
         /**
-         * <code>repeated float fdata = 15;</code>
+         * <code>repeated double fdata = 15 [packed = true];</code>
          *
          * <pre>
-         * event info as you want (array, float) 
+         * event info as you want (array, double) 
          * </pre>
          */
-        public Builder addFdata(float value) {
+        public Builder addFdata(double value) {
           ensureFdataIsMutable();
           fdata_.add(value);
           onChanged();
           return this;
         }
         /**
-         * <code>repeated float fdata = 15;</code>
+         * <code>repeated double fdata = 15 [packed = true];</code>
          *
          * <pre>
-         * event info as you want (array, float) 
+         * event info as you want (array, double) 
          * </pre>
          */
         public Builder addAllFdata(
-            java.lang.Iterable<? extends java.lang.Float> values) {
+            java.lang.Iterable<? extends java.lang.Double> values) {
           ensureFdataIsMutable();
           super.addAll(values, fdata_);
           onChanged();
           return this;
         }
         /**
-         * <code>repeated float fdata = 15;</code>
+         * <code>repeated double fdata = 15 [packed = true];</code>
          *
          * <pre>
-         * event info as you want (array, float) 
+         * event info as you want (array, double) 
          * </pre>
          */
         public Builder clearFdata() {
@@ -2394,7 +2414,7 @@ public final class ProMC {
           return this;
         }
 
-        // repeated sint64 idata = 16;
+        // repeated sint64 idata = 16 [packed = true];
         private java.util.List<java.lang.Long> idata_ = java.util.Collections.emptyList();
         private void ensureIdataIsMutable() {
           if (!((bitField0_ & 0x00008000) == 0x00008000)) {
@@ -2403,7 +2423,7 @@ public final class ProMC {
            }
         }
         /**
-         * <code>repeated sint64 idata = 16;</code>
+         * <code>repeated sint64 idata = 16 [packed = true];</code>
          *
          * <pre>
          * event info as you want (array, varint)
@@ -2414,7 +2434,7 @@ public final class ProMC {
           return java.util.Collections.unmodifiableList(idata_);
         }
         /**
-         * <code>repeated sint64 idata = 16;</code>
+         * <code>repeated sint64 idata = 16 [packed = true];</code>
          *
          * <pre>
          * event info as you want (array, varint)
@@ -2424,7 +2444,7 @@ public final class ProMC {
           return idata_.size();
         }
         /**
-         * <code>repeated sint64 idata = 16;</code>
+         * <code>repeated sint64 idata = 16 [packed = true];</code>
          *
          * <pre>
          * event info as you want (array, varint)
@@ -2434,7 +2454,7 @@ public final class ProMC {
           return idata_.get(index);
         }
         /**
-         * <code>repeated sint64 idata = 16;</code>
+         * <code>repeated sint64 idata = 16 [packed = true];</code>
          *
          * <pre>
          * event info as you want (array, varint)
@@ -2448,7 +2468,7 @@ public final class ProMC {
           return this;
         }
         /**
-         * <code>repeated sint64 idata = 16;</code>
+         * <code>repeated sint64 idata = 16 [packed = true];</code>
          *
          * <pre>
          * event info as you want (array, varint)
@@ -2461,7 +2481,7 @@ public final class ProMC {
           return this;
         }
         /**
-         * <code>repeated sint64 idata = 16;</code>
+         * <code>repeated sint64 idata = 16 [packed = true];</code>
          *
          * <pre>
          * event info as you want (array, varint)
@@ -2475,7 +2495,7 @@ public final class ProMC {
           return this;
         }
         /**
-         * <code>repeated sint64 idata = 16;</code>
+         * <code>repeated sint64 idata = 16 [packed = true];</code>
          *
          * <pre>
          * event info as you want (array, varint)
@@ -7652,26 +7672,26 @@ public final class ProMC {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013ProMC.proto\022\005promc\"\320\005\n\nProMCEvent\022&\n\005e" +
+      "\n\013ProMC.proto\022\005promc\"\330\005\n\nProMCEvent\022&\n\005e" +
       "vent\030\001 \001(\0132\027.promc.ProMCEvent.Event\022.\n\tp" +
       "articles\030\002 \001(\0132\033.promc.ProMCEvent.Partic" +
-      "les\032\374\001\n\005Event\022\016\n\006Number\030\001 \001(\005\022\022\n\nProcess" +
+      "les\032\204\002\n\005Event\022\016\n\006Number\030\001 \001(\005\022\022\n\nProcess" +
       "_ID\030\002 \001(\005\022\013\n\003MPI\030\003 \001(\005\022\013\n\003ID1\030\004 \001(\005\022\013\n\003I" +
       "D2\030\005 \001(\005\022\014\n\004PDF1\030\006 \001(\002\022\014\n\004PDF2\030\007 \001(\002\022\n\n\002" +
       "X1\030\010 \001(\002\022\n\n\002X2\030\t \001(\002\022\021\n\tScale_PDF\030\n \001(\002\022" +
       "\021\n\tAlpha_QED\030\013 \001(\002\022\r\n\005Scale\030\014 \001(\002\022\021\n\tAlp" +
-      "ha_QCD\030\r \001(\002\022\016\n\006Weight\030\016 \001(\001\022\r\n\005fdata\030\017 " +
-      "\003(\002\022\r\n\005idata\030\020 \003(\022\032\352\002\n\tParticles\022\016\n\002id\030\001",
-      " \003(\rB\002\020\001\022\022\n\006pdg_id\030\002 \003(\021B\002\020\001\022\022\n\006status\030\003" +
-      " \003(\rB\002\020\001\022\020\n\004mass\030\004 \003(\004B\002\020\001\022\016\n\002Px\030\005 \003(\022B\002" +
-      "\020\001\022\016\n\002Py\030\006 \003(\022B\002\020\001\022\016\n\002Pz\030\007 \003(\022B\002\020\001\022\023\n\007mo" +
-      "ther1\030\010 \003(\rB\002\020\001\022\023\n\007mother2\030\t \003(\rB\002\020\001\022\025\n\t" +
-      "daughter1\030\n \003(\rB\002\020\001\022\025\n\tdaughter2\030\013 \003(\rB\002" +
-      "\020\001\022\023\n\007barcode\030\014 \003(\021B\002\020\001\022\r\n\001X\030\r \003(\021B\002\020\001\022\r" +
-      "\n\001Y\030\016 \003(\021B\002\020\001\022\r\n\001Z\030\017 \003(\021B\002\020\001\022\r\n\001T\030\020 \003(\rB" +
-      "\002\020\001\022\022\n\006weight\030\021 \003(\004B\002\020\001\022\022\n\006charge\030\022 \003(\021B" +
-      "\002\020\001\022\022\n\006energy\030\023 \003(\022B\002\020\001B\021\n\010promc.ioB\005Pro" +
-      "MC"
+      "ha_QCD\030\r \001(\002\022\016\n\006Weight\030\016 \001(\001\022\021\n\005fdata\030\017 " +
+      "\003(\001B\002\020\001\022\021\n\005idata\030\020 \003(\022B\002\020\001\032\352\002\n\tParticles",
+      "\022\016\n\002id\030\001 \003(\rB\002\020\001\022\022\n\006pdg_id\030\002 \003(\021B\002\020\001\022\022\n\006" +
+      "status\030\003 \003(\rB\002\020\001\022\020\n\004mass\030\004 \003(\004B\002\020\001\022\016\n\002Px" +
+      "\030\005 \003(\022B\002\020\001\022\016\n\002Py\030\006 \003(\022B\002\020\001\022\016\n\002Pz\030\007 \003(\022B\002" +
+      "\020\001\022\023\n\007mother1\030\010 \003(\rB\002\020\001\022\023\n\007mother2\030\t \003(\r" +
+      "B\002\020\001\022\025\n\tdaughter1\030\n \003(\rB\002\020\001\022\025\n\tdaughter2" +
+      "\030\013 \003(\rB\002\020\001\022\023\n\007barcode\030\014 \003(\021B\002\020\001\022\r\n\001X\030\r \003" +
+      "(\021B\002\020\001\022\r\n\001Y\030\016 \003(\021B\002\020\001\022\r\n\001Z\030\017 \003(\021B\002\020\001\022\r\n\001" +
+      "T\030\020 \003(\rB\002\020\001\022\022\n\006weight\030\021 \003(\004B\002\020\001\022\022\n\006charg" +
+      "e\030\022 \003(\021B\002\020\001\022\022\n\006energy\030\023 \003(\022B\002\020\001B\021\n\010promc" +
+      ".ioB\005ProMC"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

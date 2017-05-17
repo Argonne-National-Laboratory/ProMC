@@ -96,6 +96,18 @@ for (int i=0; i<Ntot; i++) {
               eve->set_number(i);
               eve->set_process_id(10); // 10 is just a dummy number 
 
+             // -- do you also need to fill some arrays for this event with weights etc? You can do this too -- 
+             // add double values 
+             eve->add_fdata((double)0.091);
+             eve->add_fdata((double)0.092);
+             // .. add as many as you like
+
+             // add integer values 
+              eve->add_idata(0);
+              eve->add_idata(2);
+             //.. add as many as you like
+
+
                // fill truth information 
                ProMCEvent_Particles  *pa= promc.mutable_particles();
 

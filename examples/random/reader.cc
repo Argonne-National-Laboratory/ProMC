@@ -58,9 +58,15 @@ int main(int argc, char **argv)
   if (epbook->next() !=0) continue;
   ProMCEvent eve = epbook->get();
 
-  // get truth information 
-  ProMCEvent_Particles  *pa=eve.mutable_particles();
+  // get event information 
+  ProMCEvent_Event  *event_info=eve.mutable_event();
+
+  // print some stored info about event 
+  int fdata_size=event_info->fdata_size();
+  //cout << event_info->fdata(0) << " " << event_info->fdata(1) << endl;
  
+  // get truth particle information 
+  ProMCEvent_Particles  *pa=eve.mutable_particles();
 
   if (j%100==0)
           cout << j <<  " Nr particles=" << pa->pdg_id_size()  << endl;

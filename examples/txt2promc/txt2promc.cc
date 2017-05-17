@@ -165,7 +165,6 @@ int main(int argc, char** argv) {
   // write the header.
   epbook->setHeader(header); // write header 
 
-
   std::ifstream file(infile.c_str());
   std::string line; 
   int nev=0; int particle=1;
@@ -185,7 +184,8 @@ int main(int argc, char** argv) {
 
       // start a new event and fill some info
       if (new_event) { 
-          // event info
+          ProMCEvent promc; // create ProMC event
+          // some event info using named variables
           ProMCEvent_Event  *eve= promc.mutable_event();
           eve->set_number(nev+1);
           eve->set_scale(1.0);  // define scale of the process (optional) 
@@ -193,6 +193,18 @@ int main(int argc, char** argv) {
           eve->set_alpha_qed(1.0);
           eve->set_alpha_qcd(1.0);
           eve->set_process_id(0); // process ID (optional)  
+
+          // -- do you also need to fill some arrays for this event with weights etc? You can do this too -- 
+          // add double values 
+          eve->add_fdata((double)0.091);
+          eve->add_fdata((double)0.092);
+          // .. add as many as you like
+
+          // add integer values 
+          eve->add_idata(0);
+          eve->add_idata(2);
+          //.. add as many as you like
+
           particle=1;
       cout << "Read event =" << nev << endl;
       nev++;

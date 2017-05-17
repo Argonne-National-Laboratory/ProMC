@@ -440,7 +440,7 @@ public class MainGui {
 
                 // add extra info on MC
                 // extra MC parameters
-                java.util.List<java.lang.Float> fdata=ev.getFdataList();
+                java.util.List<java.lang.Double> fdata=ev.getFdataList();
                 java.util.List<java.lang.Long>  idata=ev.getIdataList();
 
                  if (idata != null)
