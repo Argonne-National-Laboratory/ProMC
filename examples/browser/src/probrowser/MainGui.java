@@ -489,7 +489,7 @@ public class MainGui {
 		model.addColumn("X (mm)");
 		model.addColumn("Y (mm)");
 		model.addColumn("Z (mm)");
-		model.addColumn("T (s)");
+		model.addColumn("T (mm/c)");
                 model.addColumn("BarCode");
 		model.setRowCount(0);
 		table.setModel(model);

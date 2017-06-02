@@ -3,7 +3,7 @@ Ant-Version: Apache Ant 1.9.2
 Created-By: 1.8.0_111-b14 (Oracle Corporation)
 Built-By: S.Chekanov
 Main-Class: probrowser.Main
-Built-Date: 20170517
+Built-Date: 20170530
 Version: 1.0
 Class-Path: lib/promc-protobuf.jar
 

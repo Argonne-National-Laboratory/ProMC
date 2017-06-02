@@ -1,6 +1,10 @@
 /*
 * Reads ProMC and converts it the the LCIO format.
+* For Geant4, we use GeV, mm and ns as units. Therefore, typical MC records (GeV,mm, mm/c) are
+* appropriatly converted.
+* @author S.Chekanov (ANL) 
 */
+
 import java.io.*;
 import java.util.*;
 import static java.lang.Math.sqrt;
@@ -31,8 +35,9 @@ import java.util.zip.*;
 
 /**
  * Reads ProMC and converts it the the LCIO format.
- * The code is based on STDHEP convertors by Tony J. 
- * @author S.Chekanov (ANL), J.Zuzelski (ANL), and Jeremy McCormick <jeremym@slac.stanford.edu>.  
+ * The code is based on STDHEP convertors by Tony J. We convert the ProMC format in (GeV,mm,mm/c) to (GeV,mm,ns) for
+ * Geant4 inputs with ns by default.  
+ * @author S.Chekanov (ANL), J.Zuzelski (ANL), and J. McCormick (SLAC)   
  * @version 1.3
  */
 public class promc2lcio
@@ -44,7 +49,6 @@ public class promc2lcio
 	private static GeneratorFactory factory = new GeneratorFactory();
 	private static ParticlePropertyManager pman=new ParticlePropertyManager();
 	private static  ParticlePropertyProvider ppp = pman.getParticlePropertyProvider();
-	private static final double c_light = 2.99792458e+8;
 	private static boolean haveWarned = true;
 
 	// temporary arrays
@@ -155,6 +159,7 @@ public class promc2lcio
                 runHdr.getParameters().setValue("ProMC:EventsRequested",(float)promc.getRequestedEvents()) ;
                 runHdr.getParameters().setValue("ProMC:LumiPBINV",(float)stat.getLuminosityAccumulated()) ;
                 runHdr.getParameters().setValue("ProMC:eCM",(float)header.getECM()) ;
+                runHdr.getParameters().setValue("LCIO:units","GeV,mm,ns");
  
 		float Fcross = Float.parseFloat(cross);
 		float ERRcross = Float.parseFloat(error);
@@ -236,7 +241,7 @@ public class promc2lcio
 
                         
                         // extra MC parameters
-                        java.util.List<java.lang.Float> fdata=proev.getFdataList();
+                        java.util.List<java.lang.Double> fdata=proev.getFdataList();
                         java.util.List<java.lang.Long>  idata=proev.getIdataList();
                         ILCGenericObject ext =null;
                         ILCCollection extra = null;
@@ -403,7 +408,7 @@ public class promc2lcio
 		if (pa.getPxCount()>1)   pxM=true;
 		if (pa.getPyCount()>1)   pyM=true;
 		if (pa.getPzCount()>1)   pzM=true;
-		if (pa.getIdCount()>1)       idM=true;
+		if (pa.getIdCount()>1)   idM=true;
 
 
 
@@ -463,7 +468,7 @@ public class promc2lcio
 			int id=0;
 			if (idM) id = pa.getId(j);
 
-			double x=0;
+			double x=0; // mm 
 			if (xM) x = pa.getX(j) / (double) lunit;
 
 			double y=0;
@@ -473,14 +478,17 @@ public class promc2lcio
 			if (zM) z = pa.getZ(j) / (double) lunit;
 
 
-			double t=0;
+			double t=0; // in mm/c 
 			if (tM) t = pa.getT(j) / (double) lunit;
 
+
+                        // convert mm/c to ns:
+                        double tt=t*0.00333564095;
 
 			// fill the arrays
 			apartid.add(  new int[]{pid,status,m1,m2,d1,d2,barcode} );
 			amomenta.add( new double[]{px,py,pz,ee,m} );
-			avertex.add(  new double[]{x,y,z,t});
+			avertex.add(  new double[]{x,y,z,tt});
 
 		} // end filling arrays
 
@@ -551,9 +559,8 @@ public class promc2lcio
 
 			particle.setGeneratorStatus( status ) ;
 
-			// Set time from VHEP(4).
-			// Convert to mm/c^2 from mm/c, as in slic/StdHepToLcioConvertor .
-			particle.setTime((float)(t / c_light));
+                         // assume [ns] 
+                         particle.setTime((float)t);
 
 			// Add MCParticle to the temp array.
 			particles[i] = particle;

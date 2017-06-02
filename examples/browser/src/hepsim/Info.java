@@ -179,7 +179,7 @@ public class Info {
                         String ID="%5s";
                         String L="%10s";
                         String E="%10s";
-                        System.out.println("Units: Energy in GeV,  Length in mm,  Time in sec");
+                        System.out.println("Units: Energy in GeV,  Length in mm,  Time in mm/c");
                         System.out.format("%6s%12s%6s"+ID+ID+ID+ID+ID+E+E+E+E+E+L+L+L+L+"\n","Nr","Name","PID","Stat","M1","M2","D1","D2","Px","Py","Pz","E","Mass","X","Y","Z","T"); 
              
                        int nlinse=6+10+6+5*(5)+5*(10)+4*(10);
