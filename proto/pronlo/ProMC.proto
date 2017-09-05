@@ -16,7 +16,7 @@
 // Jan 2014
 
 
-package promc;
+package pronlo;
 option java_package = "pronlo.io";
 option java_outer_classname = "ProMC";
 

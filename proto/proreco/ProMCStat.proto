@@ -4,7 +4,7 @@
 // Author: 
 // S.Chekanov. chekanov@anl.gov (ANL)
 
-package promc;
+package proreco;
 option java_package = "proreco.io";
 option java_outer_classname = "ProMCStatFile";
 

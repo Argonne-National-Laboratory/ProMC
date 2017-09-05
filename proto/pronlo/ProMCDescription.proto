@@ -5,7 +5,7 @@
 // S.Chekanov. chekanov@anl.gov (ANL)
 
 
-package promc;
+package pronlo;
 option java_package = "pronlo.io";
 option java_outer_classname = "ProMCDescriptionFile";
 

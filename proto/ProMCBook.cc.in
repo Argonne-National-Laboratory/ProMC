@@ -8,10 +8,25 @@
 ** Author: S.Chekanov (ANL). chekanov@anl.gov
 ** Copyright  March, 2013 
 ** -------------------------------------------------------------------------*/
-
-
-
 #include "ProMCBook.h"
+
+namespace @PROMC_LIBNAME@ {
+
+using namespace std;
+using namespace zipios;
+
+using std::cerr ;
+using std::cout ;
+using std::endl ;
+using std::ios ;
+using std::string ;
+using std::exception ;
+using std::istream;
+using std::ofstream;
+using std::ifstream;
+using std::setw;
+
+
 
 bool replace(std::string& str, const std::string& from, const std::string& to) {
 	size_t start_pos = str.find(from);
@@ -1109,7 +1124,7 @@ void ProMCBook::close() {
           
  
 }
-
+}
 
 
 

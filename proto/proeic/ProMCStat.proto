@@ -5,7 +5,7 @@
 // S.Chekanov (ANL) and A.Kisele
 
 
-package promc;
+package proeic;
 option java_package = "proeic.io";
 option java_outer_classname = "ProMCStatFile";
 
